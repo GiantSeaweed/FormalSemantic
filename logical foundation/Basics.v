@@ -768,7 +768,7 @@ Proof.
 
 Theorem plus_O_n' : forall n : nat, 0 + n = n.
 Proof.
-  intros n. reflexivity. Qed.
+  intros n.  reflexivity. Qed.
 
 (** Moreover, it will be useful later to know that [reflexivity]
     does somewhat _more_ simplification than [simpl] does -- for
@@ -876,7 +876,13 @@ Proof.
 Theorem plus_id_exercise : forall n m o : nat,
   n = m -> m = o -> n + m = m + o.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m o.
+  intros H H0.
+  rewrite -> H.
+  rewrite -> H0.
+  reflexivity.
+Qed.
+
 (** [] *)
 
 (** The [Admitted] command tells Coq that we want to skip trying
@@ -908,7 +914,11 @@ Theorem mult_S_1 : forall n m : nat,
   m = S n ->
   m * (1 + n) = m * m.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n m.
+  intro H.
+  rewrite -> plus_1_l.
+  rewrite -> H. 
+  reflexivity. Qed.
 
   (* (N.b. This proof can actually be completed with tactics other than
      [rewrite], but please do use [rewrite] for the sake of the exercise.) *)
