@@ -1132,14 +1132,24 @@ Qed.
 Theorem andb_true_elim2 : forall b c : bool,
   andb b c = true -> c = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+ intros b c.  destruct b.
+  - destruct c.
+    + reflexivity.
+    + simpl. intro H. rewrite -> H. reflexivity.
+  - destruct c.
+    + reflexivity.
+    + simpl. intro H. rewrite -> H. reflexivity.
+Qed.
 (** [] *)
 
 (** **** Exercise: 1 star (zero_nbeq_plus_1)  *)
 Theorem zero_nbeq_plus_1 : forall n : nat,
   beq_nat 0 (n + 1) = false.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intro n. destruct n as [|n'].
+  - simpl. reflexivity.
+  - simpl. reflexivity.
+Qed.
 (** [] *)
 
 (* ================================================================= *)
