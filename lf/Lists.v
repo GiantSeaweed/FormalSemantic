@@ -1,5 +1,5 @@
 (** * Lists: Working with Structured Data *)
-Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/".
+ Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/". 
 Require Export Induction.
 Module NatList.
 
@@ -416,6 +416,16 @@ Definition member (v:nat) (s:bag) : bool:=
   | S_ => true
   end.
 
+Theorem member_th: forall (v:nat) (s:bag),
+ member v s = match (count v s) with
+  | O => false
+  | S_ => true
+  end.
+Proof.
+  reflexivity.
+Qed.
+
+
 Example test_member1:             member 1 [1;4;1] = true.
   simpl. reflexivity.
 (* GRADE_THEOREM 0.5: NatList.test_member1 *)
@@ -529,6 +539,7 @@ Proof.
     +  rewrite -> add. simpl. 
 Qed.
 *)
+Admitted.
 
 (** [] *)
 
@@ -896,8 +907,10 @@ Lemma nonzeros_app : forall l1 l2 : natlist,
 Proof.
   intros l1 l2. induction l1 as [|l1' Hl1'].
   - simpl. reflexivity.
-  - simpl.
-  
+  - destruct l1'. 
+    + simpl. rewrite -> IHHl1'. reflexivity.
+    + simpl. rewrite -> IHHl1'. reflexivity.
+Qed.  
 (** [] *)
 
 (** **** Exercise: 2 stars (beq_natlist)  *)
@@ -905,25 +918,99 @@ Proof.
     lists of numbers for equality.  Prove that [beq_natlist l l]
     yields [true] for every list [l]. *)
 
-Fixpoint beq_natlist (l1 l2 : natlist) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
+
+
+Fixpoint beq_natlist (l1 l2 : natlist) : bool:=
+  match (subset l1 l2) with
+  | false => false
+  | true  => subset l2 l1
+  end.
+
 
 Example test_beq_natlist1 :
   (beq_natlist nil nil = true).
- (* FILL IN HERE *) Admitted.
+  simpl. reflexivity.
 
 Example test_beq_natlist2 :
   beq_natlist [1;2;3] [1;2;3] = true.
-(* FILL IN HERE *) Admitted.
+  simpl. reflexivity.
 
 Example test_beq_natlist3 :
   beq_natlist [1;2;3] [1;2;4] = false.
- (* FILL IN HERE *) Admitted.
+  simpl. reflexivity.
+
+Theorem t_member: forall n :nat,
+ member n [n] = true .
+Proof.
+  intros n.
+  rewrite -> member_th. 
+  assert (H0: count n [n] = 1) .
+  {
+    simpl.
+    assert (H1: n-n+(n-n)=0) . {
+      simpl.
+      induction n as [|n' h']. 
+      - reflexivity.
+      - simpl. rewrite -> h'.
+      reflexivity.
+    }
+    rewrite -> H1.
+    reflexivity.
+  }
+  rewrite -> H0.
+  reflexivity.
+  
+Qed.
+
+Theorem minus_id:forall n:nat,
+n-n =0.
+Proof.
+  simpl.
+      induction n as [|n' h']. 
+      - reflexivity.
+      - simpl. rewrite -> h'.
+      reflexivity.
+Qed.
+
+Theorem member_id:forall (h:nat)(t:natlist),
+  member h (h::t) = true.
+Proof.
+  induction t as [|th tt h'].
+    - simpl. rewrite -> t_member.
+    reflexivity.
+    - simpl. rewrite -> member_th. 
+    assert(Cnt: count h (h::th::tt) = S (count h (th::tt))) . {
+      simpl. rewrite -> minus_id.
+      simpl. destruct (th - h + (h - th)) as [| n'].
+        + reflexivity.
+        +reflexivity.
+         }
+    rewrite -> Cnt.
+    reflexivity.
+Qed.
+
+Theorem subset_id:forall l:natlist,
+subset l l = true.
+Proof.
+  simpl. induction l as [|h t H'].
+    - reflexivity.
+    - simpl. rewrite -> minus_id. simpl.
+    rewrite -> member_id.
+    rewrite -> H'.
+    reflexivity.
+Qed.
 
 Theorem beq_natlist_refl : forall l:natlist,
   true = beq_natlist l l.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  induction l as [|h t h'].
+  - reflexivity.
+  - simpl.   
+  rewrite -> minus_id.
+  rewrite -> member_id.
+  rewrite -> subset_id.
+  reflexivity.
+Qed.
 (** [] *)
 
 (* ================================================================= *)
@@ -936,7 +1023,8 @@ Proof.
 Theorem count_member_nonzero : forall (s : bag),
   leb 1 (count 1 (1 :: s)) = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros s. simpl. reflexivity.
+Qed.
 (** [] *)
 
 (** The following lemma about [leb] might help you in the next exercise. *)
@@ -952,9 +1040,10 @@ Proof.
 
 (** **** Exercise: 3 stars, advanced (remove_decreases_count)  *)
 Theorem remove_decreases_count: forall (s : bag),
-  leb (count 0 (remove_one 0 s)) (count 0 s) = true.
+leb (count 0 (remove_one 0 s)) (count 0 s) = true.
 Proof.
-  (* FILL IN HERE *) Admitted.
+  
+Admitted.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (bag_count_sum)  *)
