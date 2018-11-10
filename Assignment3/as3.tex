@@ -1,0 +1,220 @@
+%!TEX program = xelatex
+\documentclass[a4papers]{ctexart}
+\usepackage[english]{babel}
+%数学符号
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+\usepackage{verbatim}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{stmaryrd}
+\usepackage{txfonts}
+\usetikzlibrary{arrows,automata}
+  % \usepackage[latin1]{inputenc}
+\usepackage{verbatim}
+%表格
+\usepackage{graphicx,floatrow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{makecell}
+%页边距
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=1.8cm,bottom=1.5cm}
+
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+\setromanfont{Songti SC}
+%\setromanfont{Heiti SC}
+
+\title{FSPL -- Assignment 3}
+\author{冯诗伟161220039}
+\date{}
+\newcommand{\bif}{\,\boldsymbol{if}\ }
+\newcommand{\belse}{\,\boldsymbol{else}\ }
+\newcommand{\bthen}{\,\boldsymbol{then}\ }
+\newcommand{\bskip}{\,\boldsymbol{skip}\  }
+\newcommand{\brepeat}{\,\boldsymbol{repeat}\ }
+\newcommand{\buntil}{\,\boldsymbol{until}\ }
+\newcommand{\bwhile}{\,\boldsymbol{while}\ }
+\newcommand{\bdo}{\,\boldsymbol{do}\ }
+\newcommand{\bdotwice}{\boldsymbol{dotwice}\ }
+\newcommand{\bin}{\,\boldsymbol{in}\ }
+\newcommand{\bnewvar}{\boldsymbol{newvar}\ }
+\newcommand{\bfor}{\,\boldsymbol{for}\ }
+\newcommand{\bto}{\,\boldsymbol{to}\ }
+\newcommand{\btrue}{\,\boldsymbol{true}\ }
+\newcommand{\bfalse}{\,\boldsymbol{false}\ }
+
+
+\newcommand{\commBlock}[1]{\llbracket {#1} \rrbracket_{comm}}
+\newcommand{\boolBlock}[1]{\llbracket {#1} \rrbracket_{boolexp}}
+\newcommand{\intBlock}[1]{\llbracket {#1} \rrbracket_{intexp}}
+
+\begin{document}
+\maketitle
+\section{Problem 2.1}
+\[Syntax:\,\, <comm>\, ::= \,<var>,<var> := <intexp>,<intexp> \]
+\[Semantic: \commBlock{v_1,v_2:=e_1,e_2} \sigma = [\sigma|v_1:\intBlock{e_1}\sigma,\,v_2:\intBlock{e_2} ] \sigma  \]
+
+\section{Problem 2.2}
+\subsection{a}
+\[Syntax:\,\, <comm>\,\, ::= \brepeat\, <comm> \, \buntil\, <boolexp> \]
+\[Semantic: \commBlock{\brepeat\, c \,\, \buntil \, b} \sigma = Y_{\Sigma \rightarrow \Sigma_{\bot}} F \]
+\[where\,\, F \,\, f\,\sigma = \big( \bif \neg\, b \,\,\bthen f\,\, \belse \bskip \big)_{\Perp} (\commBlock{c}\sigma) \]
+
+\subsection{b}
+\[ Syntactic\,\, sugar:\,\, \brepeat\,\, c\,\, \buntil\,\, b \overset{def}= c\,;\bwhile \neg\,\, b\,\, \bdo c  \]
+
+\subsection{c}
+For all $\sigma \in \Sigma$, according to the definition in (a),
+\begin{alignat*}{2}
+    \commBlock{\brepeat\, c \,\, \buntil \, b} \sigma 
+    &= F \commBlock{\brepeat\, c \,\, \buntil \, b} \sigma \\
+    &= \big( \bif \neg\, b \,\,\bthen (\brepeat\, c \,\, \buntil \, b)\,\, \belse \bskip \big)_{\Perp} (\commBlock{c}\sigma)\\
+    &= \bif \neg (\boolBlock{b} {\Perp} (\commBlock{c}\sigma)) \bthen (\brepeat\, c \,\, \buntil \, b)\,\,{\Perp}(\commBlock{c}\sigma) \belse (\commBlock{c}\sigma) 
+\end{alignat*}
+According to the definition in (b),
+\begin{alignat*}{2}
+    \commBlock{\brepeat\, c \,\, \buntil \, b} \sigma 
+    &= \commBlock{c\,;\bwhile \neg\,\, b\,\, \bdo c } \sigma \\
+    &= \commBlock{ \bwhile \neg\, b \,\,\bdo\,\, c }{\Perp} (\commBlock{c}\sigma)\\
+    &= \bif \neg (\boolBlock{b} {\Perp} (\commBlock{c}\sigma)) \bthen \commBlock{c\,;\bwhile \neg\,\, b\,\, \bdo c}{\Perp}(\commBlock{c}\sigma) \belse (\commBlock{c}\sigma)\\
+    &= \bif \neg (\boolBlock{b} {\Perp} (\commBlock{c}\sigma)) \bthen (\brepeat\, c \,\, \buntil \, b)\,\,{\Perp}(\commBlock{c}\sigma) \belse (\commBlock{c}\sigma) 
+\end{alignat*}
+Therefore, the two definitions are equivalent.
+
+\section{Problem 2.3}
+We can divide $\sigma x$ into three conditions and discuss them respectively.
+
+(1) When $\sigma x$ is even and $\sigma x < 0$, $\sigma x-2 <0$.
+
+ So it will never terminates. So when $\sigma x < 0$,
+$\commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }\sigma=\perp$.
+
+(2) When $\sigma x$ is odd, $\sigma x -2$ is always add. But 0 is an even number, so $x$ will never equal 0.
+So it will never terminates. So when $\sigma x < 0$,
+$\commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }\sigma=\perp$.
+
+(3) When $\sigma x$ is even and $\sigma x \ge 0$, $x$ must be in the form of $2k$ where $k\ge 0$.
+Let's do the induction. 
+
+When $\sigma x = 0$, it will terminate directly and go to the state $[\sigma|x:0]$.
+
+Suppose that when $\sigma x = 2k$, it will terminate in the state of $[\sigma|x:0]$.
+\[ \commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }[\sigma|x:2k+2]\rightarrow^*
+ \commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }[\sigma|x:2k] \]
+
+According the induction hypothesis, $\commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }[\sigma|x:2k]$ will terminate in the state of $[\sigma|x:0]$.
+So we can get that $\commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }[\sigma|x:2k+2]$ will terminate in the state of $[\sigma|x:0]$.
+
+Now we come to the conclusion that for all $k\ge 0$,
+$\commBlock{\bwhile x\ne 0\ \bdo x:=x-2 }[\sigma|x:2k]$ will terminate in the state of $[\sigma|x:0]$.
+\\
+
+In conlusion, by combining(1)(2)(3) together we can prove the equation in Problem2.3.
+
+
+\section{Problem 2.4}
+\[ F \,\, f\,\sigma = \bif \boolBlock{b}\sigma \bthen f_{\Perp}(\commBlock{c}\sigma)  \belse \sigma \]
+
+First we have to prove that $F$ is monotone. Consider two functions $f$ and $h$, where $f \sqsubseteq h$.
+
+For all $\sigma \in \Sigma$, 
+if $\boolBlock{b}\sigma = \bfalse$, or if $\boolBlock{b}\sigma = \btrue$ and $(\commBlock{c}\sigma) = \bot$,
+it is obvious that $F f \sigma = F h \sigma$, which means $F f \sigma \sqsubseteq F h \sigma$.
+If $\boolBlock{b}\sigma = \btrue$ and $(\commBlock{c}\sigma) \ne \bot$, $F f \sigma = f_{\Perp}(\commBlock{c}\sigma),F h\sigma = h_{\Perp}(\commBlock{c}\sigma) $. 
+Because $f \sqsubseteq h$, we have that for all $x$, $fx \sqsubseteq hx$. So $f_{\Perp}(\commBlock{c}\sigma)  \sqsubseteq h_{\Perp}(\commBlock{c}\sigma)$ 
+which means $F f \sigma \sqsubseteq F h \sigma$.
+
+Next we have to prove that $F$ is continous. Consider an interesting chain of functions $f_0 \sqsubseteq f_1 \sqsubseteq f_2 \sqsubseteq .....$
+and $g = \sqcup_{n=0}^{\infty}f_n$.
+
+For all $\sigma \in \Sigma$, 
+if $\boolBlock{b}\sigma = \bfalse$, or if $\boolBlock{b}\sigma = \btrue$ and $(\commBlock{c}\sigma) = \bot$,
+it is obvious that $F (\sqcup_{n=0}^{\infty}f_n) \sigma = (\sqcup_{n=0}^{'\infty}F f_n) \sigma$,
+ which means $F (\sqcup_{n=0}^{\infty}f_n) \sigma \sqsubseteq \sqcup_{n=0}^{'\infty}(F f_n) \sigma$.
+
+ If $\boolBlock{b}\sigma = \btrue$ and $(\commBlock{c}\sigma) \ne \bot$,
+ \[F (\sqcup_{n=0}^{\infty}f_n) \sigma =F g \sigma= g (\commBlock{c}\sigma)\]
+ \[\sqcup_{n=0}^{'\infty}(F f_n) \sigma=\sqcup_{n=0}^{'\infty}f_n(\commBlock{c}\sigma)\sqsubseteq g (\commBlock{c}\sigma)\]
+\[\therefore F (\sqcup_{n=0}^{\infty}f_n) \sigma \sqsubseteq \sqcup_{n=0}^{'\infty}(F f_n)\sigma\]
+
+In conclusion, $F$ in the semantic equation for the $while$ command is continous.
+
+\section{Problem 2.5}
+ Define a series of commands: $w_0,w_1,w_2.....$
+\[ w_0 \overset{def}= \bwhile \btrue \bdo \bskip\]
+\[ w_{i+1} \overset{def}= \bif b \bthen (c;w_i) \belse \bskip\]
+
+Define the function $F$:
+\[ F \,\, f\,\sigma = \bif \boolBlock{b}\sigma \bthen f_{\Perp}(\commBlock{c}\sigma)  \belse \sigma \]
+\[ where \,\, F \commBlock{\bwhile b \bdo c} =\commBlock{\bwhile b \bdo c}\]
+
+For all $\sigma \in \Sigma$, consider the left side of the equation:
+\begin{alignat*}{2}
+    \commBlock{\bwhile b \bdo c}\sigma 
+    &= \sqcup_{n=0}^{\infty}\commBlock{w_n}\sigma\\
+    &= \sqcup_{n=0}^{\infty}F^n\bot\sigma
+\end{alignat*}
+
+Consider the right side of the equation:
+\begin{alignat*}{2}
+    \commBlock{\bwhile b \bdo (c;\bif b \bthen c \belse \bskip)}\sigma 
+    &= \commBlock{\bwhile b \bdo (c;w_1)}\sigma 
+ %   &= \sqcup_{n=0}^{\infty}\commBlock{w_n}\sigma\\
+    % &= \sqcup_{n=0}^{\infty}F^n\bot\sigma\\
+\end{alignat*}
+
+Suppose $\bwhile b \bdo (c;w_1)$ terminates after $\bwhile$ testing $b$ exactly $n(>0)$ times.
+It indicates that $\bwhile b \bdo (c;w_1)$ terminates after testing $b$  $2n-2$ or $2n-1$ times
+because both $\bwhile$ and $w_1$ test $b$ and it can terminates at both places.
+Therefore we can operate on the equation above:
+\begin{alignat*}{2}
+    \commBlock{\bwhile b \bdo (c;\bif b \bthen c \belse \bskip)}\sigma 
+    &= \commBlock{\bwhile b \bdo (c;w_1)}\sigma \\
+    &= \sqcup_{n=1}^{\infty}( F^{2n-2}\bot\sigma \, \sqcup \, F^{2n-1}\bot\sigma)\\
+    &= \sqcup_{n=0}^{\infty}F^n\bot\sigma\\
+\end{alignat*}
+\[ \therefore \commBlock{\bwhile b \bdo c}
+= \commBlock{\bwhile b \bdo (c;\bif b \bthen c \belse \bskip)}
+\]
+
+
+
+\section{Problem 2.9}
+\[ \bfor v:=e_0 \bto e_1 \bdo c \overset{def}= \bnewvar w:=e_1 \bin \bnewvar v:=e_0 \bin\]
+\[ (\bwhile v < w \bdo (c;v:=v+1)); \bif v = w \bthen c \belse \bskip\]
+
+
+\section{Problem 2.10}
+\noindent If $c$ doesn't contain occurence of $\bdotwice$, 
+\[ \bdotwice c = c;c\]
+If $c$ contaions occurences of $\bdotwice$, $c = \bdotwice d$
+\[ \bdotwice c = \bdotwice (\bdotwice d) = \bdotwice (d;d) = d;d;d;d \]
+The right side will eventually contain no occurence of $\bdotwice$. If the $d$ mentioned above also contains the occurence
+of $\bdotwice$, the length of final result will just explode in an exponential way.
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

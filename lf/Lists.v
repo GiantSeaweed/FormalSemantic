@@ -1087,19 +1087,9 @@ Qed.
 Theorem bag_count_sum: forall (s :bag)(w:nat),
   count w (sum [w] s) = S (count w s).
 Proof.
-  intros s w.
-  assert(H0: beq_nat w w = true) . {
-    induction w.
-    - reflexivity.
-    - simpl. rewrite -> IHw. reflexivity.
-  } 
-  induction s as [|h t h'].
-  - simpl.
-  rewrite -> H0.
-  reflexivity.
-  - simpl. rewrite -> H0. destruct (beq_nat h w).
-   * reflexivity.
-   * reflexivity.
+  intros s w. induction s as [|h t h'].
+  - simpl. rewrite -> beq_nat_id. reflexivity.
+  - simpl. rewrite -> beq_nat_id. reflexivity. 
  Qed.
 
 (** [] *)
