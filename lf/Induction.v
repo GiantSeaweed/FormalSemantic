@@ -3,8 +3,6 @@
 (** Before getting started, we need to import all of our
     definitions from the previous chapter: *)
 
-Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/".
-
 Require Export Basics.
 
 (** For the [Require Export] to work, you first need to use

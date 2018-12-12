@@ -1,0 +1,179 @@
+%!TEX program = xelatex
+\documentclass[a4papers]{ctexart}
+\usepackage[english]{babel}
+%数学符号
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%表格
+\usepackage{graphicx,floatrow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{makecell}
+%页边距
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=1.8cm,bottom=1.5cm}
+
+%首行缩进两字符 利用\indent \noindent进行控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}
+
+\setromanfont{Songti SC}
+%\setromanfont{Heiti SC}
+
+\title{FSPL -- Assignment 2}
+\author{冯诗伟161220039}
+\date{}
+\begin{document}
+\maketitle
+\section{Problem 1}
+\subsection{Expression 1}
+\subsubsection{normal order reduction sequence}
+\begin{alignat*}{2}
+    (\lambda f.\lambda x f(f\, x)  )(\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda z.\lambda w.z)
+    &\rightarrow (\lambda b.\lambda x.\lambda y\, b\, y\, x)((\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda z.\lambda w.z))\\
+    &\rightarrow \lambda x.\lambda y ((\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda z.\lambda w.z))y\, x \quad (*) \Leftarrow canonical\, form \\
+    &\rightarrow \lambda x.\lambda y (\lambda s.\lambda t\, (\lambda z.\lambda w.z)\, t\, s)y\, x\\
+    &\rightarrow \lambda x.\lambda y  (\lambda z.\lambda w.z)\, x\, y\\
+    &\rightarrow \lambda x.\lambda y.\, x
+\end{alignat*}
+\subsubsection{canonical form}
+I have marked with asterisk above. 
+\subsubsection{eager evaluation}
+\begin{alignat*}{2}
+    (\lambda f.\lambda x f(f\, x)  )(\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda z.\lambda w.z)
+    &\rightarrow (\lambda b.\lambda x.\lambda y\, b\, y\, x)((\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda z.\lambda w.z))\\
+    &\rightarrow (\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda x.\lambda y\, (\lambda z.\lambda w.z)\, y\, x)\\
+    &\rightarrow (\lambda b.\lambda x.\lambda y\, b\, y\, x)(\lambda x.\lambda y\, y)\\
+    &\rightarrow \lambda x.\lambda y\, (\lambda x.\lambda y\, y)\, y\, x\\
+    &\rightarrow \lambda x.\lambda y.\, x
+\end{alignat*}
+
+\subsection{Expression 2}
+\subsubsection{normal order reduction sequence}
+\begin{alignat*}{2}
+    (\lambda d.\, d \, d) (\lambda f.\lambda x. f(f\, x))
+    &\rightarrow (\lambda f.\lambda x. f(f\, x))(\lambda f.\lambda y. f(f\, y))\\
+    &\rightarrow \lambda x. (\lambda f.\lambda y. f(f\, y))((\lambda f.\lambda y. f(f\, y))\, x) \quad (*) \Leftarrow canonical\, form \\
+    &\rightarrow \lambda x. \lambda y. ((\lambda f.\lambda y. f(f\, y))\, x)((\lambda f.\lambda y. f(f\, y))\, x\, y)\\
+    &\rightarrow \lambda x. \lambda y. (\lambda y. \, x(x\, y))((\lambda f.\lambda y. f(f\, y))\, x\, y)\\
+    &\rightarrow \lambda x. \lambda y.  \, x(x\, ((\lambda f.\lambda y. f(f\, y))\, x\, y))\\
+    &\rightarrow \lambda x. \lambda y.  \, x(x(x(x\, y))\\
+\end{alignat*}
+\subsubsection{canonical form}
+I have marked with asterisk above. 
+\subsubsection{eager evaluation}
+\begin{alignat*}{2}
+    (\lambda d.\, d \, d) (\lambda f.\lambda x. f(f\, x))
+    &\rightarrow (\lambda f.\lambda x. f(f\, x))(\lambda f.\lambda y. f(f\, y))\\
+    &\rightarrow \lambda x. (\lambda f.\lambda y. f(f\, y))((\lambda f.\lambda y. f(f\, y))\, x) \\
+    &\rightarrow \lambda x. (\lambda f.\lambda y. f(f\, y))(\lambda y. x(x\, y)) \\
+    &\rightarrow \lambda x. \lambda y. (\lambda y. x(x\, y))((\lambda y. x(x\, y))\, y)\\
+    &\rightarrow \lambda x. \lambda y. (\lambda y. x(x\, y))\, x(x\, y)\\
+    &\rightarrow \lambda x. \lambda y.  \, x(x(x(x\, y))\\
+\end{alignat*}
+
+\subsection{Expression 3}
+\subsubsection{normal order reduction sequence}
+\begin{alignat*}{2}
+    & (\lambda x.x(\lambda t.(\lambda s.s)t) )(\lambda y.(\lambda z.z\, z\, z)(y\,(\lambda x.\lambda y.x)) )(\lambda t.t)\\
+    &\rightarrow (\lambda y.(\lambda z.z\, z\, z)(y\,(\lambda x.\lambda y.x)) )(\lambda t.(\lambda s.s)t) (\lambda t.t)\\
+    &\rightarrow (\lambda z.z\, z\, z)( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x)) (\lambda t.t)\\
+    &\rightarrow ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x))\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x))\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x)) (\lambda t.t)\\
+    &\rightarrow ( ((\lambda s.s)(\lambda x.\lambda y.x)))\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x))\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x)) (\lambda t.t)\\
+    &\rightarrow (\lambda x.\lambda y.x)\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x))\, ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x)) (\lambda t.t)\\
+    &\rightarrow ( (\lambda t.(\lambda s.s)t)\,(\lambda x.\lambda y.x))\,  (\lambda t.t)\\
+    &\rightarrow  (\lambda s.s)(\lambda x.\lambda y.x)  (\lambda t.t)\\
+    &\rightarrow  (\lambda x.\lambda y.x)  (\lambda t.t)\\
+    &\rightarrow  \lambda y.\lambda t.t   \quad (*) \Leftarrow canonical\, form \\
+\end{alignat*}
+
+\subsubsection{canonical form}
+I have marked with asterisk above. 
+\subsubsection{eager evaluation}
+\begin{alignat*}{2}
+    & (\lambda x.x(\lambda t.(\lambda s.s)t) )(\lambda y.(\lambda z.z\, z\, z)(y\,(\lambda x.\lambda y.x)) )(\lambda t.t)\\
+    &\rightarrow (\lambda x.x(\lambda t.t) )(\lambda y.(\lambda z.z\, z\, z)(y\,(\lambda x.\lambda y.x)) ) (\lambda t.t)\\
+    &\rightarrow (\lambda y.(\lambda z.z\, z\, z)(y\,(\lambda x.\lambda y.x)) )(\lambda t.t) (\lambda t.t)\\
+    &\rightarrow (\lambda y.((y\,(\lambda x.\lambda y.x))(y\,(\lambda x.\lambda y.x))(y\,(\lambda x.\lambda y.x))) )(\lambda t.t) (\lambda t.t)\\
+    &\rightarrow (\lambda y.((y\,(\lambda x.\lambda y.x))(y\,(\lambda x.\lambda y.x))(y\,(\lambda x.\lambda y.x))) )(\lambda t.t) (\lambda t.t)\\
+    &\rightarrow (((\lambda t.t)\,(\lambda x.\lambda y.x))((\lambda t.t)\,(\lambda x.\lambda y.x))((\lambda t.t)\,(\lambda x.\lambda y.x)))  (\lambda t.t)\\
+    &\rightarrow (((\lambda x.\lambda y.x))((\lambda x.\lambda y.x))((\lambda x.\lambda y.x)))  (\lambda t.t)\\
+    &\rightarrow (\lambda x.\lambda y.x)(\lambda x.\lambda y.x)(\lambda x.\lambda y.x)  (\lambda t.t)\\
+    &\rightarrow (\lambda x.\lambda y.x)  (\lambda t.t)\\
+    &\rightarrow  \lambda y.\lambda t.t  
+\end{alignat*}
+
+
+
+\section{Problem 2}
+\begin{alignat*}{2}
+    & (\mathbf{while}\,  x < \mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\, \sigma\{x \rightsquigarrow 1 \})    \\
+    &\rightarrow (  \mathbf{if}\,  x <\mathbf{4}  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow (  \mathbf{if}\,  \mathbf{1} <\mathbf{4}  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow (  \mathbf{if}\,   \, \mathbf{true}\,   \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow ( x:=x+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow ( x:=\mathbf{1}+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow ( x:=  \mathbf{3};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 1 \})\\
+    &\rightarrow (\mathbf{skip}\, ;\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow (  \mathbf{if}\,  x <4  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow (  \mathbf{if}\,    \mathbf{3} <\mathbf{4}  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow (  \mathbf{if}\,   \, \mathbf{true}\,   \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow ( x:=x+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow ( x:=  \mathbf{3}+  \mathbf{2};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow ( x:=\mathbf{5};\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow (\mathbf{skip}\, ;\mathbf{while}\,  x<\mathbf{4} \, \mathbf{do}\, x:=x+  \mathbf{2},\sigma\{x \rightsquigarrow 5 \})\\
+    &\rightarrow (  \mathbf{if}\,  x <\mathbf{4}  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 5 \})\\
+    &\rightarrow (  \mathbf{if}\,  \mathbf{5} <\mathbf{4}  \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 5 \})\\
+    &\rightarrow (  \mathbf{if}\,   \, \mathbf{false}\,   \, \mathbf{then}\,  (x:=x+  \mathbf{2};\mathbf{while}\,  x<4 \, \mathbf{do}\, x:=x+  \mathbf{2})\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma\{x \rightsquigarrow 5 \})\\
+    &\rightarrow (\mathbf{skip}\, ,\sigma\{x \rightsquigarrow 5 \})\\
+\end{alignat*}
+
+
+\section{Problem 3}
+\subsection{(a)}
+\begin{alignat*}{2}
+    (x:=(x++)+(x++),\sigma\{x \rightsquigarrow 2 \})
+    &\rightarrow (x:=  \mathbf{2}+(x++),\sigma\{x \rightsquigarrow 2+1 \})\\
+    &\rightarrow (x:=  \mathbf{2}+(x++),\sigma\{x \rightsquigarrow 3 \})\\
+    &\rightarrow (x:=  \mathbf{2}+  \mathbf{3},\sigma\{x \rightsquigarrow 3+1 \})\\
+    &\rightarrow (x:=\mathbf{5},\sigma\{x \rightsquigarrow 4 \})\\
+    &\rightarrow (\mathbf{skip}\, ,\sigma\{x \rightsquigarrow 5 \})\\
+\end{alignat*}
+\subsection{(b)}
+\[ \dfrac{\sigma\, x = \lfloor \mathbf{n} \rfloor  }{(++x,\sigma)\rightarrow (n+1,\sigma\{ x \rightarrow \lfloor \mathbf{n} \rfloor +1\})}\]
+
+
+\section{Problem 4}
+\noindent It is not hard to find the $c_1$ and $\sigma'$ so that
+\[(c_1,\sigma)\rightarrow^* (\mathbf{skip}\, ,\sigma_1),\, \sigma' \ne \sigma_1 \]
+Construct $c_2 = \mathbf{while}\,  b \, \mathbf{do}\, c$,\, where $\sigma\, b =  \, \mathbf{true}\, ,\, (c,\sigma_1)\rightarrow (c,\sigma')$.\\
+So we have
+\begin{alignat*}{2}
+    (c_1;c_2,\sigma) 
+    &\rightarrow (\mathbf{skip}\, ;c_2,\sigma_1)\\
+    &\rightarrow (\mathbf{skip}\, ;\mathbf{while}\,  b \, \mathbf{do}\, c,\sigma_1)\\
+    &\rightarrow ( \mathbf{if}\,  b  \, \mathbf{then}\,  (c;\mathbf{while}\,  b \, \mathbf{do}\, c)\, \mathbf{else}\,  \mathbf{skip}\, ,\sigma_1)\\
+    &\rightarrow (c;\mathbf{while}\,  b \, \mathbf{do}\, c,\sigma_1) \\
+    &\rightarrow (\mathbf{while}\,  b \, \mathbf{do}\, c,\sigma') = (c_2,\sigma')
+\end{alignat*}
+Therefore, we have $(c_1;c_2,\sigma) \rightarrow (c_2,\sigma')$ but $(c_1,\sigma)\rightarrow^* (\mathbf{skip}\, ,\sigma_1)\ne (\textbf{skip}\, ,\sigma')$.
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

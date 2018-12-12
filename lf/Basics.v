@@ -8,7 +8,7 @@
 
    (See the [Preface] for why.)
 *)
-
+(* Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/". *)
 (* ################################################################# *)
 (** * Introduction *)
 
@@ -293,7 +293,7 @@ Proof. simpl. reflexivity. Qed.
 Definition andb3 (b1:bool) (b2:bool) (b3:bool) : bool
   (* REPLACE THIS LINE WITH ":= _your_definition_ ." *)
 :=
-  match b1 with
+   match b1 with
   | true => (andb b2 b3)
   | false => false
   end.

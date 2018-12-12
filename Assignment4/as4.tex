@@ -1,0 +1,120 @@
+%!TEX program = xelatex
+\documentclass[a4papers]{ctexart}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{stmaryrd}
+\usepackage{txfonts} 
+\usepackage{ebproof}
+\usetikzlibrary{arrows,automata}
+% \usepackage[latin1]{inputenc} 
+\usepackage{verbatim} 
+\usepackage{geometry}
+\geometry{left=2cm,right=2cm,top=1.8cm,bottom=1.5cm}
+
+\newcommand{\btrue}{\ \boldsymbol{true}\ }
+\newcommand{\bfalse}{\ \boldsymbol{false}\ }
+\newcommand{\brem}{\ \boldsymbol{rem}\ }
+\newcommand{\bif}{\ \boldsymbol{if}\ }
+\newcommand{\belse}{\ \boldsymbol{else}\ }
+\newcommand{\bthen}{\ \boldsymbol{then}\ }
+\newcommand{\bwhile}{\ \boldsymbol{while}\ }
+\newcommand{\bdo}{\ \boldsymbol{do}\ }
+\newcommand{\bskip}{\ \boldsymbol{skip}\ }
+\newcommand{\hello}{$HELLO$}
+\newcommand{\hore}[3]{[#1]#2[#3]}
+\newcommand{\horep}[3]{\{#1\}#2\{#3\}}
+\newcommand{\tab}{\ \ \ \ }
+\newcommand{\w}{\wedge }
+\setlength{\parindent}{2em}
+
+\setromanfont{Songti SC}
+%\setromanfont{Heiti SC}
+
+\title{FSPL -- Assignment 4}
+\author{冯诗伟161220039}
+\date{}
+\begin{document}
+\maketitle
+\section*{3.1}
+\begin{enumerate}
+    \item $y=x^2$
+    \item $y=z \wedge x=w $
+    \item $a \le b \wedge y=ax$
+    \item $\btrue$
+    \item $\bfalse$
+\end{enumerate}
+
+\section*{3.2}
+\noindent
+The program $P$ is $c:=a\ ;d:=b;\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r)  $.\\
+The loop invariant is $d\ge 0 \wedge gcd(c,d)=gcd(a,b) $.\\
+Proof:
+\begin{enumerate}
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b) ] \tab
+            c:=a\tab [a\ge0 \wedge b \ge 0 \wedge gcd(c,b)=gcd(a,b) ]$ \hfill AS
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(c,b)=gcd(a,b) ] \tab
+            d:=b\tab [d \ge 0 \wedge gcd(c,d)=gcd(a,b) ]$ \hfill AS
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b) ]
+            c:=a;d:=b;[d \ge 0 \wedge gcd(c,d)=gcd(a,b) ]$ \hfill SC,1,2
+    \item $[d\ge 0 \w gcd(c,d)=gcd(a,b) \w d>0 \w d=z ] r:=c \brem d 
+            [d\ge 0 \w gcd(d,r)=gcd(a,b) \w d>0 \w d=z ]$               \hfill AS
+    \item $[d\ge 0 \w gcd(d,r)=gcd(a,b) \w d>0 \w d=z ] \tab c:=d \tab 
+            [d\ge 0 \w gcd(c,r)=gcd(a,b) \w d>0 \w d=z ]$               \hfill AS
+    \item $[d\ge 0 \w gcd(c,r)=gcd(a,b) \w d>0 \w d=z ] \tab d:=r \tab
+            [d\ge 0 \w gcd(c,d)=gcd(a,b) \w d>0 \w d<z ]$               \hfill AS
+    \item $[d\ge 0 \w gcd(c,d)=gcd(a,b) \w d>0 \w d=z ]$\\
+            $ r:=c \brem d ; c:=d $\\
+            $[d\ge 0 \w gcd(c,r)=gcd(a,b) \w d>0 \w d=z ]$           \hfill SC,4,5
+    \item $[d\ge 0 \w gcd(c,d)=gcd(a,b) \w d>0 \w d=z ]$\\
+          $ r:=c \brem d ; c:=d ; d:=r$\\
+          $ [d\ge 0 \w gcd(c,d)=gcd(a,b) \w d>0 \w d<z ] $          \hfill SC,7,6
+    \item  $d\ge 0 \wedge gcd(c,d)=gcd(a,b) \w d > 0 \Rightarrow d\ge 0$
+    \item  $[d\ge 0 \wedge gcd(c,d)=gcd(a,b)] $\\
+             $\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r) $\\
+            $[d\le 0 \w d \ge 0 \w gcd(c,d)=gcd(a,b)]$               \hfill WHT,8,9
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b) ]$\\
+            $\tab c:=a;d:=b;\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r)$\\  
+            $[d\le 0 \w d \ge 0 \w gcd(c,d)=gcd(a,b) ]$              \hfill SC 3,10
+    \item  $[d\le 0 \w d \ge 0 \w gcd(c,d)=gcd(a,b) ]\Rightarrow [gcd(c,0)=gcd(a,b)]$
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b) ]$\\
+           $c:=a;d:=b;\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r)$\\
+            $[ gcd(c,0)=gcd(a,b) ]$                                 \hfill WC,11,12
+    \item $gcd(c,0)=gcd(a,b) \Rightarrow c=gcd(a,b)$                  
+    \item $[a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b) ]$\\
+          $c:=a;d:=b;\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r)$\\ 
+          $[c=gcd(a,b) ]$                                           \hfill WC,13,14
+    \item $a\ge0 \wedge b \ge 0 \Rightarrow a\ge0 \wedge b \ge 0 \wedge gcd(a,b)=gcd(a,b)$
+    \item $[a\ge0 \wedge b \ge 0  ]$\\
+          $c:=a;d:=b;\bwhile(d>0) \bdo (r:=c \brem d;c:=d;d:=r)$\\ 
+          $[c=gcd(a,b) ]$                                           \hfill SP,15,16
+\end{enumerate}
+
+\section*{3.4}
+\noindent The loop invariant is $x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2}$.
+\begin{enumerate}
+    \item $[x\ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x\ne 0 \w x=z] x:=x-1
+            [x\ge 0 \w y=y_0 + \frac{(x_0-x-1)(x_0+x)}{2}  \w x<z] $\hfill AS
+    \item $[x\ge 0 \w y=y_0 + \frac{(x_0-x-1)(x_0+x)}{2}  \w x<z] \tab y:=y+x \tab 
+            [x\ge 0 \w y=y_0 + \frac{(x_0+x-1)(x_0-x)}{2}  \w x<z]$\hfill AS
+    \item $[x\ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x\ne 0 \w x=z]$\\
+            $ x:=x-1;y:=y-x;$\\
+            $ [x\ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x<z]$\hfill SC,1,2
+    \item $x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x\ne 0 \Rightarrow x\ge 0$
+    \item $[x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2}]$\\
+           $\bwhile x\ne 0 \bdo (x:=x-1;y:=y-x)$\\
+           $[x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x=0]$\hfill WHT,3,4
+    \item $x\ge 0\w x=x_0 \w y=y_0 \Rightarrow x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2}$
+    \item $[x\ge 0\w x=x_0 \w y=y_0]$\\
+            $\bwhile x\ne 0 \bdo (x:=x-1;y:=y-x)$\\
+            $[x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x=0]$\hfill SP,5,6
+    \item $x \ge 0 \w y=y_0 + \frac{(x_0-x)(x_0+x-1)}{2} \w x=0 \Rightarrow y=y_0 + \frac{x_0(x_0-1)}{2}$
+    \item $[x\ge 0\w x=x_0 \w y=y_0]$
+            $\bwhile x\ne 0 \bdo (x:=x-1;y:=y-x)$
+            $[y = y_0 + \frac{x_0(x_0-1)}{2} ]$       \hfill WC,7,8
+\end{enumerate}
+
+
+\end{document}
