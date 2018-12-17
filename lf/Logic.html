@@ -35,7 +35,7 @@
 <div class="code code-tight">
 
 <span class="id" type="keyword">Set</span> <span class="id" type="var">Warnings</span> "-notation-overridden,-parsing".<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="var">Tactics</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="var">Tactics</span>.<br/>
 </div>
 
 <div class="doc">
@@ -602,7 +602,9 @@ It takes a little practice to get used to working with negation in
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_double_neg_inf</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -638,19 +640,14 @@ It takes a little practice to get used to working with negation in
 <div class="paragraph"> </div>
 
 <a name="lab172"></a><h4 class="section">Exercise: 1 star, advanced (informal_not_PNP)</h4>
-
-</div>
-<div class="code code-space">
-<span class="id" type="keyword">Definition</span> <span class="id" type="var">informal_not_PNP_TODO</span> := 0.<br/>
-</div>
-
-<div class="doc">
-Write an informal proof (in English) of the proposition <span class="inlinecode"><span style='font-size:120%;'>&forall;</span></span><span class="inlinecode"><span class="id" type="var">P</span></span>
+ Write an informal proof (in English) of the proposition <span class="inlinecode"><span style='font-size:120%;'>&forall;</span></span><span class="inlinecode"><span class="id" type="var">P</span></span>
     <span class="inlinecode">:</span> <span class="inlinecode"><span class="id" type="keyword">Prop</span>,</span> <span class="inlinecode">~(<span class="id" type="var">P</span></span> <span class="inlinecode">∧</span> <span class="inlinecode">¬<span class="id" type="var">P</span>)</span>. 
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_informal_not_PNP</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -691,11 +688,11 @@ Since reasoning with <span class="inlinecode"><span class="id" type="var">ex_fal
 &nbsp;&nbsp;<span class="id" type="var">b</span> ≠ <span class="id" type="var">true</span> → <span class="id" type="var">b</span> = <span class="id" type="var">false</span>.<br/>
 <span class="id" type="keyword">Proof</span>.<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">intros</span> [] <span class="id" type="var">H</span>.<br/>
-&nbsp;&nbsp;- <span class="comment">(*&nbsp;b&nbsp;=&nbsp;false&nbsp;*)</span><br/>
+&nbsp;&nbsp;- <span class="comment">(*&nbsp;b&nbsp;=&nbsp;true&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">unfold</span> <span class="id" type="var">not</span> <span class="id" type="keyword">in</span> <span class="id" type="var">H</span>.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="var">exfalso</span>. <span class="comment">(*&nbsp;&lt;===&nbsp;*)</span><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="id" type="tactic">apply</span> <span class="id" type="var">H</span>. <span class="id" type="tactic">reflexivity</span>.<br/>
-&nbsp;&nbsp;- <span class="comment">(*&nbsp;b&nbsp;=&nbsp;true&nbsp;*)</span> <span class="id" type="tactic">reflexivity</span>.<br/>
+&nbsp;&nbsp;- <span class="comment">(*&nbsp;b&nbsp;=&nbsp;false&nbsp;*)</span> <span class="id" type="tactic">reflexivity</span>.<br/>
 <span class="id" type="keyword">Qed</span>.<br/>
 </div>
 
@@ -1525,9 +1522,9 @@ This version is said to be <i>tail-recursive</i>, because the recursive
 </div>
 
 <div class="doc">
-In view of this theorem, we say that the boolean
-    computation <span class="inlinecode"><span class="id" type="var">evenb</span></span> <span class="inlinecode"><span class="id" type="var">n</span></span> <i>reflects</i> the logical proposition
-    <span class="inlinecode"><span style='font-size:120%;'>&exist;</span></span><span class="inlinecode"><span class="id" type="var">k</span>,</span> <span class="inlinecode"><span class="id" type="var">n</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="var">double</span></span> <span class="inlinecode"><span class="id" type="var">k</span></span>. 
+In view of this theorem, we say that the boolean computation
+    <span class="inlinecode"><span class="id" type="var">evenb</span></span> <span class="inlinecode"><span class="id" type="var">n</span></span> is reflected in the truth of the proposition <span class="inlinecode"><span style='font-size:120%;'>&exist;</span></span><span class="inlinecode"><span class="id" type="var">k</span>,</span>
+    <span class="inlinecode"><span class="id" type="var">n</span></span> <span class="inlinecode">=</span> <span class="inlinecode"><span class="id" type="var">double</span></span> <span class="inlinecode"><span class="id" type="var">k</span></span>. 
 <div class="paragraph"> </div>
 
  Similarly, to state that two numbers <span class="inlinecode"><span class="id" type="var">n</span></span> and <span class="inlinecode"><span class="id" type="var">m</span></span> are equal, we can

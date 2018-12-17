@@ -8,7 +8,7 @@
 
    (See the [Preface] for why.)
 *)
-(* Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/". *)
+
 (* ################################################################# *)
 (** * Introduction *)
 
@@ -253,36 +253,21 @@ Proof. simpl. reflexivity. Qed.
 (** **** Exercise: 1 star (nandb)  *)
 (** Remove "[Admitted.]" and complete the definition of the following
     function; then make sure that the [Example] assertions below can
-    each be verified by Coq.  (Remove "[Admitted.]" and fill in each
-    proof, following the model of the [orb] tests above.) The function
-    should return [true] if either or both of its inputs are
-    [false]. *)
-
-Definition notb  (b1:bool) : bool :=
-  match b1 with
-  | true => false
-  | false => true
-  end.
+    each be verified by Coq.  (I.e., fill in each proof, following the
+    model of the [orb] tests above.) The function should return [true]
+    if either or both of its inputs are [false]. *)
 
 Definition nandb (b1:bool) (b2:bool) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *)
- :=
-  match b1 with
-  | true => (notb b2)
-  | false => true
-  end.
-
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
 Example test_nandb1:               (nandb true false) = true.
-(* FILL IN HERE  Admitted.*)
-Proof. simpl. reflexivity. Qed.
-
+(* FILL IN HERE *) Admitted.
 Example test_nandb2:               (nandb false false) = true.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 Example test_nandb3:               (nandb false true) = true.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 Example test_nandb4:               (nandb true true) = false.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 1 star (andb3)  *)
@@ -291,21 +276,16 @@ Proof. simpl. reflexivity. Qed.
     otherwise. *)
 
 Definition andb3 (b1:bool) (b2:bool) (b3:bool) : bool
-  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *)
-:=
-   match b1 with
-  | true => (andb b2 b3)
-  | false => false
-  end.
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
 Example test_andb31:                 (andb3 true true true) = true.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 Example test_andb32:                 (andb3 false true true) = false.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 Example test_andb33:                 (andb3 true false true) = false.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 Example test_andb34:                 (andb3 true true false) = false.
-Proof. simpl. reflexivity. Qed.
+(* FILL IN HERE *) Admitted.
 (** [] *)
 
 (* ================================================================= *)
@@ -358,8 +338,9 @@ Inductive color : Type :=
     Every inductively defined type ([day], [bool], [rgb], [color],
     etc.) contains a set of _constructor expressions_ built from
     _constructors_ like [red], [primary], [true], [false], [monday],
-    etc.  The definitions of [rgb] and [color] say how expressions in
-    the sets [rgb] and [color] can be built:
+    etc. *)
+(** The definitions of [rgb] and [color] say how expressions in the
+    sets [rgb] and [color] can be built:
 
     - [red], [green], and [blue] are the constructors of [rgb];
     - [black], [white], and [primary] are the constructors of [color];
@@ -630,16 +611,12 @@ Fixpoint exp (base power : nat) : nat :=
     Translate this into Coq. *)
 
 Fixpoint factorial (n:nat) : nat
-:=
-  match n with
-  | O => S O
-  | S n' => mult n (factorial n')
-  end.
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
 Example test_factorial1:          (factorial 3) = 6.
-Proof. simpl. reflexivity.  Qed.
+(* FILL IN HERE *) Admitted.
 Example test_factorial2:          (factorial 5) = (mult 10 12).
-Proof. simpl. reflexivity.  Qed.
+(* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** We can make numerical expressions a little easier to read and
@@ -661,8 +638,8 @@ Check ((0 + 1) + 1).
 (** (The [level], [associativity], and [nat_scope] annotations
     control how these notations are treated by Coq's parser.  The
     details are not important for our purposes, but interested readers
-    can refer to the optional "More on Notation" section at the end of
-    this chapter.)
+    can refer to the "More on Notation" section at the end of this
+    chapter.)
 
     Note that these do not change the definitions we've already made:
     they are simply instructions to the Coq parser to accept [x + y]
@@ -670,11 +647,12 @@ Check ((0 + 1) + 1).
     to display [plus x y] as [x + y]. *)
 
 (** When we say that Coq comes with almost nothing built-in, we really
-    mean it: even equality testing for numbers is a user-defined
-    operation!  We now define a function [beq_nat], which tests
-    [nat]ural numbers for [eq]uality, yielding a [b]oolean.  Note the
-    use of nested [match]es (we could also have used a simultaneous
-    match, as we did in [minus].) *)
+    mean it: even equality testing is a user-defined operation!
+
+    Here is a function [beq_nat], which tests [nat]ural numbers for
+    [eq]uality, yielding a [b]oolean.  Note the use of nested
+    [match]es (we could also have used a simultaneous match, as we did
+    in [minus].) *)
 
 Fixpoint beq_nat (n m : nat) : bool :=
   match n with
@@ -713,19 +691,15 @@ Proof. simpl. reflexivity.  Qed.
     yielding a [b]oolean.  Instead of making up a new [Fixpoint] for
     this one, define it in terms of a previously defined function. *)
 
-Definition blt_nat (n m : nat) : bool :=
-  match n with
-   |O   => notb(beq_nat n m)
-   |S n' => andb (leb n m) (notb(beq_nat n m))
-  end.
-
+Definition blt_nat (n m : nat) : bool
+  (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
 Example test_blt_nat1:             (blt_nat 2 2) = false.
-Proof. simpl. reflexivity.  Qed.
+(* FILL IN HERE *) Admitted.
 Example test_blt_nat2:             (blt_nat 2 4) = true.
-Proof. simpl. reflexivity.  Qed.
+(* FILL IN HERE *) Admitted.
 Example test_blt_nat3:             (blt_nat 4 2) = false.
-Proof. simpl. reflexivity.  Qed.
+(* FILL IN HERE *) Admitted.
 (** [] *)
 
 (* ################################################################# *)
@@ -768,7 +742,7 @@ Proof.
 
 Theorem plus_O_n' : forall n : nat, 0 + n = n.
 Proof.
-  intros n.  reflexivity. Qed.
+  intros n. reflexivity. Qed.
 
 (** Moreover, it will be useful later to know that [reflexivity]
     does somewhat _more_ simplification than [simpl] does -- for
@@ -876,13 +850,7 @@ Proof.
 Theorem plus_id_exercise : forall n m o : nat,
   n = m -> m = o -> n + m = m + o.
 Proof.
-  intros n m o.
-  intros H H0.
-  rewrite -> H.
-  rewrite -> H0.
-  reflexivity.
-Qed.
-
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** The [Admitted] command tells Coq that we want to skip trying
@@ -914,11 +882,7 @@ Theorem mult_S_1 : forall n m : nat,
   m = S n ->
   m * (1 + n) = m * m.
 Proof.
-  intros n m.
-  intro H.
-  rewrite -> plus_1_l.
-  rewrite -> H. 
-  reflexivity. Qed.
+  (* FILL IN HERE *) Admitted.
 
   (* (N.b. This proof can actually be completed with tactics other than
      [rewrite], but please do use [rewrite] for the sake of the exercise.) *)
@@ -1132,24 +1096,14 @@ Qed.
 Theorem andb_true_elim2 : forall b c : bool,
   andb b c = true -> c = true.
 Proof.
- intros b c.  destruct b.
-  - destruct c.
-    + reflexivity.
-    + simpl. intro H. rewrite -> H. reflexivity.
-  - destruct c.
-    + reflexivity.
-    + simpl. intro H. rewrite -> H. reflexivity.
-Qed.
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 1 star (zero_nbeq_plus_1)  *)
 Theorem zero_nbeq_plus_1 : forall n : nat,
   beq_nat 0 (n + 1) = false.
 Proof.
-  intro n. destruct n as [|n'].
-  - simpl. reflexivity.
-  - simpl. reflexivity.
-Qed.
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (* ================================================================= *)
@@ -1236,6 +1190,11 @@ Fixpoint plus' (n : nat) (m : nat) : nat :=
 (* ################################################################# *)
 (** * More Exercises *)
 
+(** Each SF chapter comes with a tester file (e.g.  [BasicsTest.v]),
+    containing scripts that check most of the exercises. You can run
+    [make BasicsTest.vo] in a terminal and check its output to make
+    sure you didn't miss anything. *)
+
 (** **** Exercise: 2 stars (boolean_functions)  *)
 (** Use the tactics you have learned so far to prove the following
     theorem about boolean functions. *)
@@ -1252,6 +1211,14 @@ Proof.
     function [f] has the property that [f x = negb x].*)
 
 (* FILL IN HERE *)
+(* The [Import] statement on the next line tells Coq to use the
+   standard library String module.  We'll use strings more in later
+   chapters, but for the moment we just need syntax for literal
+   strings for the grader comments. *)
+From Coq Require Export String.
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_negation_fn_applied_twice : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (andb_eq_orb)  *)
@@ -1298,8 +1265,8 @@ Proof.
         next that will give it mathematical meaning.)
 
         One caveat: If you use [O] or [S] as constructor names in your
-        definition, it will confuse the auto-grader script in
-        [BasicsTest.v].  Please choose different names.
+        definition, it will confuse the auto-grader script.  Please choose 
+        different names.
 
     (b) Next, write an increment function [incr] for binary numbers,
         and a function [bin_to_nat] to convert binary numbers to unary
@@ -1314,5 +1281,8 @@ Proof.
         first converting it to unary and then incrementing. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_binary : option (prod nat string) := None.
 (** [] *)
 

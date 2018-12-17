@@ -3,7 +3,7 @@
 (** Before getting started, we need to import all of our
     definitions from the previous chapter: *)
 
-Require Export Basics.
+From LF Require Export Basics.
 
 (** For the [Require Export] to work, you first need to use
     [coqc] to compile [Basics.v] into [Basics.vo].  This is like
@@ -24,7 +24,7 @@ Require Export Basics.
 
          [coqc Basics.v]
 
-       (which should work from any terminal window).
+       (which should work regardless).
 
     If you have trouble (e.g., if you get complaints about missing
     identifiers later in the file), it may be because the "load path"
@@ -158,39 +158,23 @@ Proof.
 Theorem mult_0_r : forall n:nat,
   n * 0 = 0.
 Proof.
-  intros n. induction n as [|n' Hn'].
-  - reflexivity.
-  - simpl. rewrite -> Hn'. reflexivity.
-Qed. 
-(* GRADE_THEOREM 0.5: mult_0_r *)
+  (* FILL IN HERE *) Admitted.
 
 Theorem plus_n_Sm : forall n m : nat,
   S (n + m) = n + (S m).
 Proof.
-  intros m n. induction m as [|m' Hm'].
-  - simpl. reflexivity.
-  - simpl. rewrite -> Hm'; reflexivity.
-Qed.
-(* GRADE_THEOREM 0.5: plus_n_Sm *)
+  (* FILL IN HERE *) Admitted.
 
 
 Theorem plus_comm : forall n m : nat,
   n + m = m + n.
 Proof.
-  intros m n. induction m as [|m' Hm'].
-  - simpl. rewrite <- plus_n_O.  reflexivity.
-  - simpl. rewrite <- plus_n_Sm. rewrite <- Hm'; reflexivity.
-Qed.
-(* GRADE_THEOREM 0.5: plus_comm *)
+  (* FILL IN HERE *) Admitted.
 
 Theorem plus_assoc : forall n m p : nat,
   n + (m + p) = (n + m) + p.
 Proof.
-  intros n m p. induction n as [|n' Hn'].
-  - simpl. reflexivity.
-  - simpl. rewrite -> Hn'. reflexivity. 
-Qed. 
-(* GRADE_THEOREM 0.5: plus_assoc *)
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 2 stars (double_plus)  *)
@@ -206,11 +190,7 @@ Fixpoint double (n:nat) :=
 
 Lemma double_plus : forall n, double n = n + n .
 Proof.
-  intros n. induction n as [|n' Hn'].
-  - simpl. reflexivity.
-  - simpl. rewrite <- plus_n_Sm. rewrite -> Hn'. reflexivity.
-Qed.
-
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (evenb_S)  *)
@@ -224,10 +204,7 @@ Qed.
 Theorem evenb_S : forall n : nat,
   evenb (S n) = negb (evenb n).
 Proof.
-  intros n. induction n as [|n' Hn'].
-  - simpl. reflexivity.
-  - rewrite -> Hn'. simpl. rewrite -> negb_involutive. reflexivity.
-Qed.
+  (* FILL IN HERE *) Admitted.
 (** [] *)
 
 (** **** Exercise: 1 star (destruct_induction)  *)
@@ -236,6 +213,9 @@ Qed.
 
 (* FILL IN HERE *)
 *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_destruct_induction : option (prod nat string) := None.
 (** [] *)
 
 (* ################################################################# *)
@@ -435,6 +415,9 @@ Proof.
 
     Proof: (* FILL IN HERE *)
 *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_plus_comm_informal : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (beq_nat_refl_informal)  *)
@@ -586,6 +569,9 @@ Proof.
     do so! *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_binary_commute : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 5 stars, advanced (binary_inverse)  *)
@@ -615,6 +601,9 @@ Proof.
     here. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_binary_inverse : option (prod nat string) := None.
 (** [] *)
 
 

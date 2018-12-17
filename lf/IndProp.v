@@ -1,7 +1,7 @@
 (** * IndProp: Inductively Defined Propositions *)
 
 Set Warnings "-notation-overridden,-parsing".
-Require Export Logic.
+From LF Require Export Logic.
 Require Coq.omega.Omega.
 
 (* ################################################################# *)
@@ -130,7 +130,10 @@ Qed.
 Theorem ev_double : forall n,
   ev (double n).
 Proof.
-  (* FILL IN HERE *) Admitted.
+  intros n. induction n.
+  - apply ev_0. 
+  - simpl. apply ev_SS. apply IHn.
+Qed.    
 (** [] *)
 
 (* ################################################################# *)
@@ -351,7 +354,7 @@ Proof.
     { intros [k' Hk']. rewrite Hk'. exists (S k'). reflexivity. }
     apply I. (* reduce the original goal to the new one *)
 
-Admitted.
+Abort.
 
 (* ================================================================= *)
 (** ** Induction on Evidence *)
@@ -645,6 +648,9 @@ Inductive R : nat -> nat -> nat -> Prop :=
 
 (* FILL IN HERE *)
 *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_R_provability : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (R_fact)  *)
@@ -699,6 +705,9 @@ End R.
       Hint: choose your induction carefully! *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_subsequence : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (R_provability2)  *)
@@ -715,6 +724,7 @@ End R.
     - [R 1 [1;2;1;0]]
     - [R 6 [3;2;1;0]]  *)
 
+(* FILL IN HERE *)
 (** [] *)
 
 
@@ -1412,10 +1422,10 @@ Proof.
     without any help at all.
 
     We say that a list "stutters" if it repeats the same element
-    consecutively.  (This is different from the [NoDup] property in 
-    the exercise above: the sequence [1;4;1] repeats but does not
-    stutter.)  The property "[nostutter mylist]" means that
-    [mylist] does not stutter.  Formulate an inductive definition for
+    consecutively.  (This is different from not containing duplicates:
+    the sequence [[1;4;1]] repeats the element [1] but does not
+    stutter.)  The property "[nostutter mylist]" means that [mylist]
+    does not stutter.  Formulate an inductive definition for
     [nostutter]. *)
 
 Inductive nostutter {X:Type} : list X -> Prop :=
@@ -1460,6 +1470,9 @@ Example test_nostutter_4:      not (nostutter [3;1;1;4]).
   end.
   contradiction H1; auto. Qed.
 *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_nostutter : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (filter_challenge)  *)
@@ -1493,6 +1506,9 @@ Example test_nostutter_4:      not (nostutter [3;1;1;4]).
     not a [Fixpoint].)  *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_filter_challenge : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 5 stars, advanced, optional (filter_challenge_2)  *)
@@ -1527,6 +1543,9 @@ Example test_nostutter_4:      not (nostutter [3;1;1;4]).
 *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_pal_pal_app_rev_pal_rev : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 5 stars, optional (palindrome_converse)  *)
@@ -1571,6 +1590,9 @@ Example test_nostutter_4:      not (nostutter [3;1;1;4]).
     [disjoint], [NoDup] and [++] (list append).  *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_NoDup_disjoint_etc : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced, optional (pigeonhole_principle)  *)
@@ -1616,6 +1638,9 @@ Theorem pigeonhole_principle: forall (X:Type) (l1  l2:list X),
 Proof.
    intros X l1. induction l1 as [|x l1' IHl1'].
   (* FILL IN HERE *) Admitted.
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_check_repeats : option (prod nat string) := None.
 (** [] *)
 
 

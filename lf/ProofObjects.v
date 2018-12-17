@@ -1,7 +1,7 @@
 (** * ProofObjects: The Curry-Howard Correspondence *)
 
 Set Warnings "-notation-overridden,-parsing".
-Require Export IndProp.
+From LF Require Export IndProp.
 
 (** "_Algorithms are the computational content of proofs_."  --Robert Harper *)
 
@@ -57,7 +57,7 @@ Print ev.
                  propositions  ~  types
                  proofs        ~  data values
 
-    See [Wadler 2015] for a brief history and an up-to-date exposition. *)
+    See [Wadler 2015] (in Bib.v) for a brief history and up-to-date exposition. *)
 
 (** Many useful insights follow from this connection.  To begin with,
     it gives us a natural interpretation of the type of the [ev_SS]

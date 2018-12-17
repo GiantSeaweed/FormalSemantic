@@ -6,10 +6,10 @@ Induction.vo Induction.glob Induction.v.beautified: Induction.v Basics.vo
 Induction.vio: Induction.v Basics.vio
 Lists.vo Lists.glob Lists.v.beautified: Lists.v Induction.vo
 Lists.vio: Lists.v Induction.vio
-Poly.vo Poly.glob Poly.v.beautified: Poly.v
-Poly.vio: Poly.v
-Tactics.vo Tactics.glob Tactics.v.beautified: Tactics.v
-Tactics.vio: Tactics.v
+Poly.vo Poly.glob Poly.v.beautified: Poly.v Lists.vo
+Poly.vio: Poly.v Lists.vio
+Tactics.vo Tactics.glob Tactics.v.beautified: Tactics.v Poly.vo
+Tactics.vio: Tactics.v Poly.vio
 Logic.vo Logic.glob Logic.v.beautified: Logic.v Tactics.vo
 Logic.vio: Logic.v Tactics.vio
 IndProp.vo IndProp.glob IndProp.v.beautified: IndProp.v Logic.vo

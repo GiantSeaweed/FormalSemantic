@@ -36,8 +36,8 @@
 
 <span class="id" type="keyword">Set</span> <span class="id" type="var">Warnings</span> "-notation-overridden,-parsing".<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Coq.omega.Omega</span>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Maps</span>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Maps</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span>.<br/>
 </div>
 
 <div class="doc">
@@ -460,7 +460,7 @@ When we are using a particular tactic many times in a proof, we
 </div>
 
 <div class="doc">
-That was is a bit better, but we really want Coq to discover the
+That was a bit better, but we really want Coq to discover the
     relevant hypotheses for us.  We can do this by using the <span class="inlinecode"><span class="id" type="keyword">match</span></span>
     <span class="inlinecode"><span class="id" type="var">goal</span></span> facility of Ltac. 
 </div>

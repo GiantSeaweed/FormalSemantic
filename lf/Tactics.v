@@ -11,9 +11,9 @@
     - how to strengthen an induction hypothesis (and when such
       strengthening is required); and
     - more details on how to reason by case analysis. *)
-(* Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/". *)
+
 Set Warnings "-notation-overridden,-parsing".
-Require Export Poly.
+From LF Require Export Poly.
 
 (* ################################################################# *)
 (** * The [apply] Tactic *)
@@ -70,8 +70,8 @@ Proof.
 
 Theorem silly_ex :
      (forall n, evenb n = true -> oddb (S n) = true) ->
-     evenb 3 = true ->
-     oddb 4 = true.
+     oddb 3 = true ->
+     evenb 4 = true.
 Proof.
   (* FILL IN HERE *) Admitted.
 (** [] *)
@@ -92,8 +92,8 @@ Proof.
     the goal. *)
 
   symmetry.
-  simpl. (* (This [simpl] is optional, since [apply] will perform
-            simplification first, if needed.) *)
+  simpl. (** (This [simpl] is optional, since [apply] will perform
+             simplification first, if needed.) *)
   apply H.  Qed.
 
 (** **** Exercise: 3 stars (apply_exercise1)  *)
@@ -111,14 +111,13 @@ Proof.
 (** **** Exercise: 1 star, optional (apply_rewrite)  *)
 (** Briefly explain the difference between the tactics [apply] and
     [rewrite].  What are the situations where both can usefully be
-    applied?
+    applied? *)
 
 (* FILL IN HERE *)
-*)
 (** [] *)
 
 (* ################################################################# *)
-(** * The [apply ... with ...] Tactic *)
+(** * The [apply with] Tactic *)
 
 (** The following silly example uses two rewrites in a row to
     get from [[a,b]] to [[e,f]]. *)
@@ -245,9 +244,9 @@ Proof.
   intros n m H. inversion H as [Hnm]. reflexivity.  Qed.
 
 (** **** Exercise: 1 star (inversion_ex3)  *)
-Example inversion_ex3 : forall (X : Type) (x y z : X) (l j : list X),
-  x :: y :: l = z :: j ->
-  y :: l = x :: j ->
+Example inversion_ex3 : forall (X : Type) (x y z w : X) (l j : list X),
+  x :: y :: l = w :: z :: j ->
+  x :: l = z :: j ->
   x = y.
 Proof.
   (* FILL IN HERE *) Admitted.
@@ -569,6 +568,9 @@ Proof.
     as possible about quantifiers. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_informal_proof : option (prod nat string) := None.
 (** [] *)
 
 (** The strategy of doing fewer [intros] before an [induction] to
@@ -768,8 +770,8 @@ Abort.
 (** The reason that [simpl] doesn't make progress here is that it
     notices that, after tentatively unfolding [bar m], it is left with
     a match whose scrutinee, [m], is a variable, so the [match] cannot
-    be simplified further.  (It is not smart enough to notice that the
-    two branches of the [match] are identical.)  So it gives up on
+    be simplified further.  It is not smart enough to notice that the
+    two branches of the [match] are identical, so it gives up on
     unfolding [bar m] and leaves it alone.  Similarly, tentatively
     unfolding [bar (m+1)] leaves a [match] whose scrutinee is a
     function application (that, itself, cannot be simplified, even
@@ -1022,9 +1024,8 @@ Proof.
 
    Theorem: For any [nat]s [n] [m], [beq_nat n m = beq_nat m n].
 
-   Proof:
+   Proof: *)
    (* FILL IN HERE *)
-*)
 (** [] *)
 
 (** **** Exercise: 3 stars, optional (beq_nat_trans)  *)
@@ -1047,7 +1048,7 @@ Proof.
     [combine]. Then, prove that the property holds. (Be sure to leave
     your induction hypothesis general by not doing [intros] on more
     things than necessary.  Hint: what property do you need of [l1]
-    and [l2] for [split] [combine l1 l2 = (l1,l2)] to be true?) *)
+    and [l2] for [split (combine l1 l2) = (l1,l2)] to be true?) *)
 
 Definition split_combine_statement : Prop
   (* ("[: Prop]" means that we are giving a name to a
@@ -1057,6 +1058,9 @@ Definition split_combine_statement : Prop
 Theorem split_combine : split_combine_statement.
 Proof.
 (* FILL IN HERE *) Admitted.
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_split_combine : option (prod nat string) := None.
 
 (** [] *)
 
@@ -1072,7 +1076,7 @@ Proof.
   (* FILL IN HERE *) Admitted.
 (** [] *)
 
-(** **** Exercise: 4 stars, advanced, recommended (forall_exists_challenge)  *) 
+(** **** Exercise: 4 stars, advanced, recommended (forall_exists_challenge)  *)
 (** Define two recursive [Fixpoints], [forallb] and [existsb].  The
     first checks whether every element in a list satisfies a given
     predicate:
@@ -1103,6 +1107,9 @@ Proof.
     [existsb'] and [existsb] have the same behavior. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_forall_exists_challenge : option (prod nat string) := None.
 (** [] *)
 
 

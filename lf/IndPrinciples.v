@@ -4,7 +4,7 @@
     mind, we can now take a deeper look at induction principles. *)
 
 Set Warnings "-notation-overridden,-parsing".
-Require Export ProofObjects.
+From LF Require Export ProofObjects.
 
 (* ################################################################# *)
 (** * Basics *)

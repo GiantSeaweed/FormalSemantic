@@ -52,7 +52,7 @@
 <div class="code code-tight">
 
 <span class="id" type="keyword">Require</span> <span class="id" type="var">Coq.extraction.Extraction</span>.<br/>
-<span class="id" type="var">Extraction</span> <span class="id" type="var">Language</span> <span class="id" type="var">Ocaml</span>.<br/>
+<span class="id" type="var">Extraction</span> <span class="id" type="var">Language</span> <span class="id" type="var">OCaml</span>.<br/>
 </div>
 
 <div class="doc">
@@ -63,7 +63,7 @@ Now we load up the Coq environment with some definitions, either
 
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Coq.Arith.Arith</span>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Coq.Arith.EqNat</span>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">ImpCEvalFun</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">ImpCEvalFun</span>.<br/>
 </div>
 
 <div class="doc">
@@ -195,9 +195,9 @@ The extraction is the same as always.
 </div>
 <div class="code code-tight">
 
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">ImpParser</span>.<br/><hr class='doublespaceincode'/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Maps</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">ImpParser</span>.<br/><hr class='doublespaceincode'/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Maps</span>.<br/>
 <span class="id" type="keyword">Definition</span> <span class="id" type="var">empty_state</span> := { <span style="font-size: 80%;"><span style="letter-spacing:-.1em;">-</span><span style="letter-spacing:-.1em;">-</span>&gt;</span> 0 }.<br/>
 <span class="id" type="var">Extraction</span> "imp.ml" <span class="id" type="var">empty_state</span> <span class="id" type="var">ceval_step</span> <span class="id" type="var">parse</span>.<br/>
 </div>

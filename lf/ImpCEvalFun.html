@@ -53,7 +53,7 @@
 <br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Coq.omega.Omega</span>.<br/>
 <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Coq.Arith.Arith</span>.<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span> <span class="id" type="var">Maps</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Import</span> <span class="id" type="var">Imp</span> <span class="id" type="var">Maps</span>.<br/>
 </div>
 
 <div class="doc">
@@ -280,8 +280,8 @@ Proof.&nbsp;reflexivity.&nbsp;Qed.<br/>
 <div class="paragraph"> </div>
 
 <a name="lab372"></a><h4 class="section">Exercise: 2 stars, optional (peven)</h4>
- Write a <span class="inlinecode"><span class="id" type="var">While</span></span> program that sets <span class="inlinecode"><span class="id" type="var">Z</span></span> to <span class="inlinecode">0</span> if <span class="inlinecode"><span class="id" type="var">X</span></span> is even and
-    sets <span class="inlinecode"><span class="id" type="var">Z</span></span> to <span class="inlinecode">1</span> otherwise.  Use <span class="inlinecode"><span class="id" type="var">ceval_test</span></span> to test your
+ Write an <span class="inlinecode"><span class="id" type="var">Imp</span></span> program that sets <span class="inlinecode"><span class="id" type="var">Z</span></span> to <span class="inlinecode">0</span> if <span class="inlinecode"><span class="id" type="var">X</span></span> is even and
+    sets <span class="inlinecode"><span class="id" type="var">Z</span></span> to <span class="inlinecode">1</span> otherwise.  Use <span class="inlinecode"><span class="id" type="var">test_ceval</span></span> to test your
     program. 
 </div>
 <div class="code code-tight">
@@ -367,7 +367,9 @@ Proof.&nbsp;reflexivity.&nbsp;Qed.<br/>
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_ceval_step__ceval_inf</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 

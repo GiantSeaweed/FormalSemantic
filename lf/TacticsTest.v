@@ -1,25 +1,32 @@
 Set Warnings "-notation-overridden,-parsing".
-Require Import Tactics.
-Parameter MISSING: Type.   
+From Coq Require Export String.
+From LF Require Import Tactics.
+Parameter MISSING: Type. 
 
-Module Check.  
+Module Check. 
 
-Ltac check_type A B :=  
-match type of A with  
+Ltac check_type A B := 
+match type of A with 
 | context[MISSING] => idtac "Missing:" A  
-| ?T => first [unify T B; idtac "Type: ok" | idtac "Type: wrong - should be (" B ")"]  
-end.  
+| ?T => first [unify T B; idtac "Type: ok" | idtac "Type: wrong - should be (" B ")"] 
+end. 
 
-Ltac print_manual_grade A :=  
-first [  
-match eval compute in A with  
-| ?T => idtac "Score:" T  
-end  
-| idtac "Score: Ungraded"].  
+Ltac print_manual_grade A := 
+match eval compute in A with 
+| Some (pair ?S ?C) => 
+idtac "Score:"  S; 
+match eval compute in C with  
+| ""%string => idtac "Comment: None"  
+| _ => idtac "Comment:" C 
+end 
+| None => 
+idtac "Score: Ungraded"; 
+idtac "Comment: None" 
+end. 
 
 End Check.
 
-Require Import Tactics.
+From LF Require Import Tactics.
 Import Check.
 
 Goal True.
@@ -42,8 +49,8 @@ idtac " ".
 idtac "#> inversion_ex3".
 idtac "Possible points: 1".
 check_type @inversion_ex3 (
-(forall (X : Type) (x y z : X) (l j : list X),
- x :: y :: l = z :: j -> y :: l = x :: j -> x = y)).
+(forall (X : Type) (x y z w : X) (l j : list X),
+ x :: y :: l = w :: z :: j -> x :: l = z :: j -> x = y)).
 idtac "Assumptions:".
 Abort.
 Print Assumptions inversion_ex3.
@@ -91,10 +98,10 @@ idtac " ".
 idtac "-------------------  beq_nat_true_informal  --------------------".
 idtac " ".
 
-idtac "#> Manually graded: beq_nat_true_informal".
+idtac "#> Manually graded: informal_proof".
 idtac "Advanced".
 idtac "Possible points: 2".
-print_manual_grade score_beq_nat_true_informal.
+print_manual_grade manual_grade_for_informal_proof.
 idtac " ".
 
 idtac "-------------------  gen_dep_practice  --------------------".
@@ -142,7 +149,7 @@ idtac " ".
 idtac "#> Manually graded: split_combine".
 idtac "Advanced".
 idtac "Possible points: 3".
-print_manual_grade score_split_combine.
+print_manual_grade manual_grade_for_split_combine.
 idtac " ".
 
 idtac "-------------------  filter_exercise  --------------------".
@@ -166,7 +173,7 @@ idtac " ".
 idtac "#> Manually graded: forall_exists_challenge".
 idtac "Advanced".
 idtac "Possible points: 4".
-print_manual_grade score_forall_exists_challenge.
+print_manual_grade manual_grade_for_forall_exists_challenge.
 idtac " ".
 
 idtac " ".

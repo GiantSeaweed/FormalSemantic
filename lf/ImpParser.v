@@ -24,7 +24,7 @@ Require Import Coq.Arith.Arith.
 Require Import Coq.Arith.EqNat.
 Require Import Coq.Lists.List.
 Import ListNotations.
-Require Import Maps Imp.
+From LF Require Import Maps Imp.
 
 (* ################################################################# *)
 (** * Internals *)

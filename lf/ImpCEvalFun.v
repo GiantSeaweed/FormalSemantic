@@ -12,7 +12,7 @@
 
 Require Import Coq.omega.Omega.
 Require Import Coq.Arith.Arith.
-Require Import Imp Maps.
+From LF Require Import Imp Maps.
 
 (** Here was our first try at an evaluation function for commands,
     omitting [WHILE]. *)
@@ -212,8 +212,8 @@ Proof. reflexivity. Qed.
 (** [] *)
 
 (** **** Exercise: 2 stars, optional (peven)  *)
-(** Write a [While] program that sets [Z] to [0] if [X] is even and
-    sets [Z] to [1] otherwise.  Use [ceval_test] to test your
+(** Write an [Imp] program that sets [Z] to [0] if [X] is even and
+    sets [Z] to [1] otherwise.  Use [test_ceval] to test your
     program. *)
 
 (* FILL IN HERE *)
@@ -290,6 +290,9 @@ Proof.
     steps of the formal proof. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_ceval_step__ceval_inf : option (prod nat string) := None.
 (** [] *)
 
 Theorem ceval_step_more: forall i1 i2 st st' c,

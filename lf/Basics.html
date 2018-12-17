@@ -358,10 +358,9 @@ We can also introduce some familiar syntax for the boolean
 <a name="lab22"></a><h4 class="section">Exercise: 1 star (nandb)</h4>
  Remove "<span class="inlinecode"><span class="id" type="var">Admitted</span>.</span>" and complete the definition of the following
     function; then make sure that the <span class="inlinecode"><span class="id" type="keyword">Example</span></span> assertions below can
-    each be verified by Coq.  (Remove "<span class="inlinecode"><span class="id" type="var">Admitted</span>.</span>" and fill in each
-    proof, following the model of the <span class="inlinecode"><span class="id" type="var">orb</span></span> tests above.) The function
-    should return <span class="inlinecode"><span class="id" type="var">true</span></span> if either or both of its inputs are
-    <span class="inlinecode"><span class="id" type="var">false</span></span>. 
+    each be verified by Coq.  (I.e., fill in each proof, following the
+    model of the <span class="inlinecode"><span class="id" type="var">orb</span></span> tests above.) The function should return <span class="inlinecode"><span class="id" type="var">true</span></span>
+    if either or both of its inputs are <span class="inlinecode"><span class="id" type="var">false</span></span>. 
 </div>
 <div class="code code-tight">
 
@@ -470,8 +469,8 @@ Let's look at this in a little more detail.
     Every inductively defined type (<span class="inlinecode"><span class="id" type="var">day</span></span>, <span class="inlinecode"><span class="id" type="var">bool</span></span>, <span class="inlinecode"><span class="id" type="var">rgb</span></span>, <span class="inlinecode"><span class="id" type="var">color</span></span>,
     etc.) contains a set of <i>constructor expressions</i> built from
     <i>constructors</i> like <span class="inlinecode"><span class="id" type="tactic">red</span></span>, <span class="inlinecode"><span class="id" type="var">primary</span></span>, <span class="inlinecode"><span class="id" type="var">true</span></span>, <span class="inlinecode"><span class="id" type="var">false</span></span>, <span class="inlinecode"><span class="id" type="var">monday</span></span>,
-    etc.  The definitions of <span class="inlinecode"><span class="id" type="var">rgb</span></span> and <span class="inlinecode"><span class="id" type="var">color</span></span> say how expressions in
-    the sets <span class="inlinecode"><span class="id" type="var">rgb</span></span> and <span class="inlinecode"><span class="id" type="var">color</span></span> can be built:
+    etc.  The definitions of <span class="inlinecode"><span class="id" type="var">rgb</span></span> and <span class="inlinecode"><span class="id" type="var">color</span></span> say how expressions in the
+    sets <span class="inlinecode"><span class="id" type="var">rgb</span></span> and <span class="inlinecode"><span class="id" type="var">color</span></span> can be built:
 
 <div class="paragraph"> </div>
 
@@ -894,8 +893,8 @@ Again, the <span class="inlinecode"><span class="id" type="var">_</span></span> 
 (The <span class="inlinecode"><span class="id" type="var">level</span></span>, <span class="inlinecode"><span class="id" type="var">associativity</span></span>, and <span class="inlinecode"><span class="id" type="var">nat_scope</span></span> annotations
     control how these notations are treated by Coq's parser.  The
     details are not important for our purposes, but interested readers
-    can refer to the optional "More on Notation" section at the end of
-    this chapter.)
+    can refer to the "More on Notation" section at the end of this
+    chapter.)
 
 <div class="paragraph"> </div>
 
@@ -906,11 +905,14 @@ Again, the <span class="inlinecode"><span class="id" type="var">_</span></span> 
 <div class="paragraph"> </div>
 
  When we say that Coq comes with almost nothing built-in, we really
-    mean it: even equality testing for numbers is a user-defined
-    operation!  We now define a function <span class="inlinecode"><span class="id" type="var">beq_nat</span></span>, which tests
-    <span class="inlinecode"><span class="id" type="var">nat</span></span>ural numbers for <span class="inlinecode"><span class="id" type="var">eq</span></span>uality, yielding a <span class="inlinecode"><span class="id" type="var">b</span></span>oolean.  Note the
-    use of nested <span class="inlinecode"><span class="id" type="keyword">match</span></span>es (we could also have used a simultaneous
-    match, as we did in <span class="inlinecode"><span class="id" type="var">minus</span></span>.) 
+    mean it: even equality testing is a user-defined operation!
+
+<div class="paragraph"> </div>
+
+    Here is a function <span class="inlinecode"><span class="id" type="var">beq_nat</span></span>, which tests <span class="inlinecode"><span class="id" type="var">nat</span></span>ural numbers for
+    <span class="inlinecode"><span class="id" type="var">eq</span></span>uality, yielding a <span class="inlinecode"><span class="id" type="var">b</span></span>oolean.  Note the use of nested
+    <span class="inlinecode"><span class="id" type="keyword">match</span></span>es (we could also have used a simultaneous match, as we did
+    in <span class="inlinecode"><span class="id" type="var">minus</span></span>.) 
 </div>
 <div class="code code-tight">
 
@@ -1613,6 +1615,12 @@ When Coq checks this definition, it notes that <span class="inlinecode"><span cl
 
 <div class="paragraph"> </div>
 
+ Each SF chapter comes with a tester file (e.g.  <span class="inlinecode"><span class="id" type="var">BasicsTest.v</span></span>),
+    containing scripts that check most of the exercises. You can run
+    <span class="inlinecode"><span class="id" type="var">make</span></span> <span class="inlinecode"><span class="id" type="var">BasicsTest.vo</span></span> in a terminal and check its output to make
+    sure you didn't miss anything. 
+<div class="paragraph"> </div>
+
 <a name="lab41"></a><h4 class="section">Exercise: 2 stars (boolean_functions)</h4>
  Use the tactics you have learned so far to prove the following
     theorem about boolean functions. 
@@ -1635,6 +1643,13 @@ Now state and prove a theorem <span class="inlinecode"><span class="id" type="va
 <div class="code code-tight">
 
 <span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;The&nbsp;<span class="inlinecode"><span class="id" type="keyword">Import</span></span>&nbsp;statement&nbsp;on&nbsp;the&nbsp;next&nbsp;line&nbsp;tells&nbsp;Coq&nbsp;to&nbsp;use&nbsp;the<br/>
+&nbsp;&nbsp;&nbsp;standard&nbsp;library&nbsp;String&nbsp;module.&nbsp;&nbsp;We'll&nbsp;use&nbsp;strings&nbsp;more&nbsp;in&nbsp;later<br/>
+&nbsp;&nbsp;&nbsp;chapters,&nbsp;but&nbsp;for&nbsp;the&nbsp;moment&nbsp;we&nbsp;just&nbsp;need&nbsp;syntax&nbsp;for&nbsp;literal<br/>
+&nbsp;&nbsp;&nbsp;strings&nbsp;for&nbsp;the&nbsp;grader&nbsp;comments.&nbsp;*)</span><br/>
+<span class="id" type="var">From</span> <span class="id" type="var">Coq</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="var">String</span>.<br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_negation_fn_applied_twice</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -1711,8 +1726,8 @@ Now state and prove a theorem <span class="inlinecode"><span class="id" type="va
 <div class="paragraph"> </div>
 
         One caveat: If you use <span class="inlinecode"><span class="id" type="var">O</span></span> or <span class="inlinecode"><span class="id" type="var">S</span></span> as constructor names in your
-        definition, it will confuse the auto-grader script in
-        <span class="inlinecode"><span class="id" type="var">BasicsTest.v</span></span>.  Please choose different names.
+        definition, it will confuse the auto-grader script.  Please choose 
+        different names.
 
 <div class="paragraph"> </div>
 
@@ -1732,7 +1747,9 @@ Now state and prove a theorem <span class="inlinecode"><span class="id" type="va
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_binary</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 

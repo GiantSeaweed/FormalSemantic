@@ -36,11 +36,11 @@
 
 <span class="comment">(*&nbsp;Suppress&nbsp;some&nbsp;annoying&nbsp;warnings&nbsp;from&nbsp;Coq:&nbsp;*)</span><br/>
 <span class="id" type="keyword">Set</span> <span class="id" type="var">Warnings</span> "-notation-overridden,-parsing".<br/>
-<span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="var">Lists</span>.<br/>
+<span class="id" type="var">From</span> <span class="id" type="var">LF</span> <span class="id" type="keyword">Require</span> <span class="id" type="keyword">Export</span> <span class="id" type="var">Lists</span>.<br/>
 </div>
 
 <div class="doc">
-<a name="lab97"></a><h1 class="section">FULL: Polymorphism</h1>
+<a name="lab97"></a><h1 class="section">Polymorphism</h1>
 
 <div class="paragraph"> </div>
 
@@ -220,8 +220,7 @@ To use <span class="inlinecode"><span class="id" type="tactic">repeat</span></sp
 
 <span class="id" type="keyword">Example</span> <span class="id" type="var">test_repeat2</span> :<br/>
 &nbsp;&nbsp;<span class="id" type="tactic">repeat</span> <span class="id" type="var">bool</span> <span class="id" type="var">false</span> 1 = <span class="id" type="var">cons</span> <span class="id" type="var">bool</span> <span class="id" type="var">false</span> (<span class="id" type="var">nil</span> <span class="id" type="var">bool</span>).<br/>
-<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/><hr class='doublespaceincode'/>
-<span class="id" type="keyword">Module</span> <span class="id" type="var">MumbleGrumble</span>.<br/>
+<span class="id" type="keyword">Proof</span>. <span class="id" type="tactic">reflexivity</span>. <span class="id" type="keyword">Qed</span>.<br/>
 </div>
 
 <div class="doc">
@@ -230,6 +229,7 @@ To use <span class="inlinecode"><span class="id" type="tactic">repeat</span></sp
 </div>
 <div class="code code-tight">
 
+<span class="id" type="keyword">Module</span> <span class="id" type="var">MumbleGrumble</span>.<br/><hr class='doublespaceincode'/>
 <span class="id" type="keyword">Inductive</span> <span class="id" type="var">mumble</span> : <span class="id" type="keyword">Type</span> :=<br/>
 &nbsp;&nbsp;| <span class="id" type="var">a</span> : <span class="id" type="var">mumble</span><br/>
 &nbsp;&nbsp;| <span class="id" type="var">b</span> : <span class="id" type="var">mumble</span> → <span class="id" type="var">nat</span> → <span class="id" type="var">mumble</span><br/>
@@ -271,13 +271,12 @@ Which of the following are well-typed elements of <span class="inlinecode"><span
 </div>
 <div class="code code-tight">
 <span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="id" type="keyword">End</span> <span class="id" type="var">MumbleGrumble</span>.<br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_mumble_grumble</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
-<div class="code code-tight">
-
-<span class="id" type="keyword">End</span> <span class="id" type="var">MumbleGrumble</span>.<br/>
-</div>
 
 <div class="doc">
 <a name="lab100"></a><h3 class="section">Type Annotation Inference</h3>
@@ -770,15 +769,20 @@ The following function takes two lists and combines them
 <div class="paragraph"> </div>
 
  One last polymorphic type for now: <i>polymorphic options</i>,
-    which generalize <span class="inlinecode"><span class="id" type="var">natoption</span></span> from the previous chapter: 
+    which generalize <span class="inlinecode"><span class="id" type="var">natoption</span></span> from the previous chapter.  (We put
+    the definition inside a module because the standard library
+    already defines <span class="inlinecode"><span class="id" type="var">option</span></span> and it's this one that we want to use
+    below.) 
 </div>
 <div class="code code-tight">
 
+<span class="id" type="keyword">Module</span> <span class="id" type="var">OptionPlayground</span>.<br/><hr class='doublespaceincode'/>
 <span class="id" type="keyword">Inductive</span> <span class="id" type="var">option</span> (<span class="id" type="var">X</span>:<span class="id" type="keyword">Type</span>) : <span class="id" type="keyword">Type</span> :=<br/>
 &nbsp;&nbsp;| <span class="id" type="var">Some</span> : <span class="id" type="var">X</span> → <span class="id" type="var">option</span> <span class="id" type="var">X</span><br/>
 &nbsp;&nbsp;| <span class="id" type="var">None</span> : <span class="id" type="var">option</span> <span class="id" type="var">X</span>.<br/><hr class='doublespaceincode'/>
 <span class="id" type="var">Arguments</span> <span class="id" type="var">Some</span> {<span class="id" type="var">X</span>} <span class="id" type="var">_</span>.<br/>
-<span class="id" type="var">Arguments</span> <span class="id" type="var">None</span> {<span class="id" type="var">X</span>}.<br/>
+<span class="id" type="var">Arguments</span> <span class="id" type="var">None</span> {<span class="id" type="var">X</span>}.<br/><hr class='doublespaceincode'/>
+<span class="id" type="keyword">End</span> <span class="id" type="var">OptionPlayground</span>.<br/>
 </div>
 
 <div class="doc">
@@ -1043,7 +1047,7 @@ The expression <span class="inlinecode">(<span class="id" type="keyword">fun</sp
 </div>
 <div class="code code-tight">
 
-<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>:<span class="id" type="var">X</span>→<span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>:<span class="id" type="var">list</span> <span class="id" type="var">X</span>) : (<span class="id" type="var">list</span> <span class="id" type="var">Y</span>) :=<br/>
+<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>:<span class="id" type="var">X</span>→<span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>:<span class="id" type="var">list</span> <span class="id" type="var">X</span>) : (<span class="id" type="var">list</span> <span class="id" type="var">Y</span>) :=<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">l</span> <span class="id" type="keyword">with</span><br/>
 &nbsp;&nbsp;| []     ⇒ []<br/>
 &nbsp;&nbsp;| <span class="id" type="var">h</span> :: <span class="id" type="var">t</span> ⇒ (<span class="id" type="var">f</span> <span class="id" type="var">h</span>) :: (<span class="id" type="var">map</span> <span class="id" type="var">f</span> <span class="id" type="var">t</span>)<br/>
@@ -1127,7 +1131,7 @@ It can even be applied to a list of numbers and
 </div>
 <div class="code code-tight">
 
-<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">flat_map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>:<span class="id" type="var">X</span> → <span class="id" type="var">list</span> <span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>:<span class="id" type="var">list</span> <span class="id" type="var">X</span>)<br/>
+<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">flat_map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>: <span class="id" type="var">X</span> → <span class="id" type="var">list</span> <span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>: <span class="id" type="var">list</span> <span class="id" type="var">X</span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: (<span class="id" type="var">list</span> <span class="id" type="var">Y</span>)<br/>
 &nbsp;&nbsp;<span class="comment">(*&nbsp;REPLACE&nbsp;THIS&nbsp;LINE&nbsp;WITH&nbsp;":=&nbsp;_your_definition_&nbsp;."&nbsp;*)</span>. <span class="id" type="var">Admitted</span>.<br/><hr class='doublespaceincode'/>
 <span class="id" type="keyword">Example</span> <span class="id" type="var">test_flat_map1</span>:<br/>
@@ -1178,7 +1182,7 @@ It can even be applied to a list of numbers and
 </div>
 <div class="code code-tight">
 
-<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">fold</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>: <span class="id" type="var">X</span>→<span class="id" type="var">Y</span>→<span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>:<span class="id" type="var">list</span> <span class="id" type="var">X</span>) (<span class="id" type="var">b</span>:<span class="id" type="var">Y</span>)<br/>
+<span class="id" type="keyword">Fixpoint</span> <span class="id" type="var">fold</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>: <span class="id" type="var">X</span>→<span class="id" type="var">Y</span>→<span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>: <span class="id" type="var">list</span> <span class="id" type="var">X</span>) (<span class="id" type="var">b</span>: <span class="id" type="var">Y</span>)<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span class="id" type="var">Y</span> :=<br/>
 &nbsp;&nbsp;<span class="id" type="keyword">match</span> <span class="id" type="var">l</span> <span class="id" type="keyword">with</span><br/>
 &nbsp;&nbsp;| <span class="id" type="var">nil</span> ⇒ <span class="id" type="var">b</span><br/>
@@ -1250,7 +1254,9 @@ Intuitively, the behavior of the <span class="inlinecode"><span class="id" type=
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_fold_types_different</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -1367,7 +1373,7 @@ Prove the correctness of <span class="inlinecode"><span class="id" type="var">fo
 </div>
 <div class="code code-tight">
 
-<span class="id" type="keyword">Definition</span> <span class="id" type="var">fold_map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>:<span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span> : <span class="id" type="var">X</span> → <span class="id" type="var">Y</span>) (<span class="id" type="var">l</span> : <span class="id" type="var">list</span> <span class="id" type="var">X</span>) : <span class="id" type="var">list</span> <span class="id" type="var">Y</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">fold_map</span> {<span class="id" type="var">X</span> <span class="id" type="var">Y</span>: <span class="id" type="keyword">Type</span>} (<span class="id" type="var">f</span>: <span class="id" type="var">X</span> → <span class="id" type="var">Y</span>) (<span class="id" type="var">l</span>: <span class="id" type="var">list</span> <span class="id" type="var">X</span>) : <span class="id" type="var">list</span> <span class="id" type="var">Y</span><br/>
 &nbsp;&nbsp;<span class="comment">(*&nbsp;REPLACE&nbsp;THIS&nbsp;LINE&nbsp;WITH&nbsp;":=&nbsp;_your_definition_&nbsp;."&nbsp;*)</span>. <span class="id" type="var">Admitted</span>.<br/>
 </div>
 
@@ -1377,7 +1383,9 @@ Write down a theorem <span class="inlinecode"><span class="id" type="var">fold_m
 </div>
 <div class="code code-tight">
 
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_fold_map</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -1481,7 +1489,9 @@ Thought exercise: before running the following commands, can you
 
 </div>
 <div class="code code-tight">
-<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/>
+<span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span><br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_informal_proof</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 
@@ -1612,7 +1622,9 @@ Exponentiation:
 <span class="id" type="keyword">Proof</span>. <span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span> <span class="id" type="var">Admitted</span>.<br/><hr class='doublespaceincode'/>
 <span class="id" type="keyword">Example</span> <span class="id" type="var">exp_3</span> : <span class="id" type="var">exp</span> <span class="id" type="var">three</span> <span class="id" type="var">zero</span> = <span class="id" type="var">one</span>.<br/>
 <span class="id" type="keyword">Proof</span>. <span class="comment">(*&nbsp;FILL&nbsp;IN&nbsp;HERE&nbsp;*)</span> <span class="id" type="var">Admitted</span>.<br/><hr class='doublespaceincode'/>
-<span class="id" type="keyword">End</span> <span class="id" type="var">Church</span>.<br/>
+<span class="id" type="keyword">End</span> <span class="id" type="var">Church</span>.<br/><hr class='doublespaceincode'/>
+<span class="comment">(*&nbsp;Do&nbsp;not&nbsp;modify&nbsp;the&nbsp;following&nbsp;line:&nbsp;*)</span><br/>
+<span class="id" type="keyword">Definition</span> <span class="id" type="var">manual_grade_for_succ_plus_mult_exp</span> : <span class="id" type="var">option</span> (<span class="id" type="var">prod</span> <span class="id" type="var">nat</span> <span class="id" type="var">string</span>) := <span class="id" type="var">None</span>.<br/>
 </div>
 
 <span class="proofbox">&#9744;</span> 

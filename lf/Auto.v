@@ -2,8 +2,8 @@
 
 Set Warnings "-notation-overridden,-parsing".
 Require Import Coq.omega.Omega.
-Require Import Maps.
-Require Import Imp.
+From LF Require Import Maps.
+From LF Require Import Imp.
 
 (** Up to now, we've used the more manual part of Coq's tactic
     facilities.  In this chapter, we'll learn more about some of Coq's
@@ -337,7 +337,7 @@ Proof.
     subst st'0.
     auto. Qed.
 
-(** That was is a bit better, but we really want Coq to discover the
+(** That was a bit better, but we really want Coq to discover the
     relevant hypotheses for us.  We can do this by using the [match
     goal] facility of Ltac. *)
 

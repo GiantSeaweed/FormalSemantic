@@ -3,7 +3,7 @@
 (** This short (and optional) chapter develops some basic definitions
     and a few theorems about binary relations in Coq.  The key
     definitions are repeated where they are actually used (in the
-    \CHAPV2{Smallstep} chapter of _Programming Language Foundations_),
+    [Smallstep] chapter of _Programming Language Foundations_),
     so readers who are already comfortable with these ideas can safely
     skim or skip this chapter.  However, relations are also a good
     source of exercises for developing facility with Coq's basic
@@ -11,7 +11,7 @@
     just after the [IndProp] chapter. *)
 
 Set Warnings "-notation-overridden,-parsing".
-Require Export IndProp.
+From LF Require Export IndProp.
 
 (* ################################################################# *)
 (** * Relations *)

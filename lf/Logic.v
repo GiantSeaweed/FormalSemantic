@@ -1,7 +1,7 @@
 (** * Logic: Logic in Coq *)
 
 Set Warnings "-notation-overridden,-parsing".
-Require Export Tactics.
+From LF Require Export Tactics.
 
 (** In previous chapters, we have seen many examples of factual
     claims (_propositions_) and ways of presenting evidence of their
@@ -436,6 +436,9 @@ Proof.
    _Theorem_: [P] implies [~~P], for any proposition [P]. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_double_neg_inf : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 2 stars, recommended (contrapositive)  *)
@@ -453,11 +456,13 @@ Proof.
 (** [] *)
 
 (** **** Exercise: 1 star, advanced (informal_not_PNP)  *)
-Definition informal_not_PNP_TODO := 0.
 (** Write an informal proof (in English) of the proposition [forall P
     : Prop, ~(P /\ ~P)]. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_informal_not_PNP : option (prod nat string) := None.
 (** [] *)
 
 (** Similarly, since inequality involves a negation, it requires a
@@ -488,11 +493,11 @@ Theorem not_true_is_false' : forall b : bool,
   b <> true -> b = false.
 Proof.
   intros [] H.
-  - (* b = false *)
+  - (* b = true *)
     unfold not in H.
     exfalso.                (* <=== *)
     apply H. reflexivity.
-  - (* b = true *) reflexivity.
+  - (* b = false *) reflexivity.
 Qed.
 
 (* ================================================================= *)
@@ -1108,9 +1113,9 @@ Proof.
   - intros [k Hk]. rewrite Hk. apply evenb_double.
 Qed.
 
-(** In view of this theorem, we say that the boolean
-    computation [evenb n] _reflects_ the logical proposition
-    [exists k, n = double k]. *)
+(** In view of this theorem, we say that the boolean computation
+    [evenb n] is reflected in the truth of the proposition [exists k,
+    n = double k]. *)
 
 (** Similarly, to state that two numbers [n] and [m] are equal, we can
     say either (1) that [beq_nat n m] returns [true] or (2) that [n =
@@ -1321,6 +1326,7 @@ Proof.
   symmetry.
   apply beq_nat_true_iff.
 Qed.
+
 
 (** It may seem strange that the general excluded middle is not
     available by default in Coq; after all, any given claim must be

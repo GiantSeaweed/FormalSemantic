@@ -2,13 +2,13 @@
 
 (* Final reminder: Please do not put solutions to the exercises in
    publicly accessible places.  Thank you!! *)
-(* Add LoadPath "/Users/fengshiwei/001NJU/2018Fall/FormalSemantics/lf/". *)
+
 (* Suppress some annoying warnings from Coq: *)
 Set Warnings "-notation-overridden,-parsing".
-Require Export Lists.
+From LF Require Export Lists.
 
 (* ################################################################# *)
-(** * FULL: Polymorphism *)
+(** * Polymorphism *)
 
 (** In this chapter we continue our development of basic
     concepts of functional programming.  The critical new ideas are
@@ -139,10 +139,11 @@ Example test_repeat2 :
 Proof. reflexivity.  Qed.
 
 
-Module MumbleGrumble.
 
 (** **** Exercise: 2 stars (mumble_grumble)  *)
 (** Consider the following two inductively defined types. *)
+
+Module MumbleGrumble.
 
 Inductive mumble : Type :=
   | a : mumble
@@ -163,9 +164,11 @@ Inductive grumble (X:Type) : Type :=
       - [e bool (b c 0)]
       - [c]  *)
 (* FILL IN HERE *)
-(** [] *)
-
 End MumbleGrumble.
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_mumble_grumble : option (prod nat string) := None.
+(** [] *)
 
 (* ----------------------------------------------------------------- *)
 (** *** Type Annotation Inference *)
@@ -521,7 +524,12 @@ Proof.
 (** ** Polymorphic Options *)
 
 (** One last polymorphic type for now: _polymorphic options_,
-    which generalize [natoption] from the previous chapter: *)
+    which generalize [natoption] from the previous chapter.  (We put
+    the definition inside a module because the standard library
+    already defines [option] and it's this one that we want to use
+    below.) *)
+
+Module OptionPlayground.
 
 Inductive option (X:Type) : Type :=
   | Some : X -> option X
@@ -529,6 +537,8 @@ Inductive option (X:Type) : Type :=
 
 Arguments Some {X} _.
 Arguments None {X}.
+
+End OptionPlayground.
 
 (** We can now rewrite the [nth_error] function so that it works
     with any type of lists. *)
@@ -723,7 +733,7 @@ Example test_partition2: partition (fun x => false) [5;9;0] = ([], [5;9;0]).
 
 (** Another handy higher-order function is called [map]. *)
 
-Fixpoint map {X Y:Type} (f:X->Y) (l:list X) : (list Y) :=
+Fixpoint map {X Y: Type} (f:X->Y) (l:list X) : (list Y) :=
   match l with
   | []     => []
   | h :: t => (f h) :: (map f t)
@@ -778,7 +788,7 @@ Proof.
       = [1; 2; 3; 5; 6; 7; 10; 11; 12].
 *)
 
-Fixpoint flat_map {X Y:Type} (f:X -> list Y) (l:list X)
+Fixpoint flat_map {X Y: Type} (f: X -> list Y) (l: list X)
                    : (list Y)
   (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
@@ -818,7 +828,7 @@ Definition option_map {X Y : Type} (f : X -> Y) (xo : option X)
     operation that lies at the heart of Google's map/reduce
     distributed programming framework. *)
 
-Fixpoint fold {X Y:Type} (f: X->Y->Y) (l:list X) (b:Y)
+Fixpoint fold {X Y: Type} (f: X->Y->Y) (l: list X) (b: Y)
                          : Y :=
   match l with
   | nil => b
@@ -863,6 +873,9 @@ Proof. reflexivity. Qed.
     different? *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_fold_types_different : option (prod nat string) := None.
 (** [] *)
 
 (* ================================================================= *)
@@ -940,13 +953,16 @@ Proof.
 (** We can also define [map] in terms of [fold].  Finish [fold_map]
     below. *)
 
-Definition fold_map {X Y:Type} (f : X -> Y) (l : list X) : list Y
+Definition fold_map {X Y: Type} (f: X -> Y) (l: list X) : list Y
   (* REPLACE THIS LINE WITH ":= _your_definition_ ." *). Admitted.
 
 (** Write down a theorem [fold_map_correct] in Coq stating that
    [fold_map] is correct, and prove it. *)
 
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_fold_map : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 2 stars, advanced (currying)  *)
@@ -1015,6 +1031,9 @@ Proof.
    forall X n l, length l = n -> @nth_error X l n = None
 *)
 (* FILL IN HERE *)
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_informal_proof : option (prod nat string) := None.
 (** [] *)
 
 (** **** Exercise: 4 stars, advanced (church_numerals)  *)
@@ -1119,6 +1138,9 @@ Example exp_3 : exp three zero = one.
 Proof. (* FILL IN HERE *) Admitted.
 
 End Church.
+
+(* Do not modify the following line: *)
+Definition manual_grade_for_succ_plus_mult_exp : option (prod nat string) := None.
 (** [] *)
 
 End Exercises.
