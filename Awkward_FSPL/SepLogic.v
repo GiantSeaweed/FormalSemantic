@@ -14,7 +14,7 @@ Inductive scom : Type :=
   | SIf : bexp -> scom -> scom -> scom
   | SWhile : bexp -> scom -> scom
   | SLoad : id -> aexp -> scom        (* x:=[e] *)
-  | SStore: scom -> scom -> scom      (* [e]:=e' *)
+  | SStore: aexp -> aexp -> scom      (* [e]:=e' *)
   | SCons:  id -> aexp -> aexp -> scom(* x:=cons(e,e') *)
   | SDis : aexp -> scom .              (* dispose(e) *)
 
@@ -28,10 +28,14 @@ Notation "'WHILE' b 'DO' c 'END'" :=
   (SWhile b c) (at level 80, right associativity).
 Notation "'IFB' c1 'THEN' c2 'ELSE' c3 'FI'" :=
   (SIf c1 c2 c3) (at level 80, right associativity).
+Notation "x '::=' cons( a , b )" :=
+  (SCons x a b) (at level 60).
 Notation " x '::=' [ e ] " :=
   (SLoad x e) (at level 60).
 Notation "[ e ] '::=' e' " :=
   (SStore e e') (at level 60).
+Notation "dis( a )" :=
+  (SDis a) (at level 60).
 
 (* Program states, which is called sstate *)
 Definition store := id -> nat.
@@ -71,6 +75,9 @@ Definition disjoint (h1 h2: heap) : Prop :=
 Definition h_union (h1 h2: heap) : heap :=
   fun l => 
     if (in_not_in_dec l h1) then h1 l else h2 l.
+
+Definition h_delete (h: heap) (l:nat) : heap :=
+  fun l' => if(eq_nat_dec l l') then None else h l'.
 
 (* h1 is a subset of h2 *)
 Definition h_subset (h1 h2: heap) : Prop := 
@@ -125,10 +132,32 @@ Inductive big_step:
       c @ st ~> (St st1) ->
       (WHILE b DO c END) @ st1 ~> (St st2) ->
       (WHILE b DO c END) @ st ~>  (St st2) 
-  |E_STORE_T: forall aexp1 aexp2 st ,
+  | E_Scons : forall x a b st n, 
+      not_in_dom  n (snd st) /\ not_in_dom  (n+1) (snd st)->
+      (x ::= cons( a , b )) @ st ~> St ((update (fst st) x n),
+      h_update 
+      (h_update (snd st) (n) ( aeval (fst st) a)) (n+1) (aeval (fst st) b)) 
+  | E_SDisTrue: forall aexp st,
+      in_dom (aeval (fst st) aexp) (snd st) ->
+      (dis(aexp)) @ st ~> (St ((fst st) , (h_delete (snd st) (aeval (fst st) aexp))))
+  | E_SDisFalse: forall aexp st,
+      not_in_dom (aeval (fst st) aexp) (snd st) ->
+      (dis(aexp)) @ st ~> Abt
+  | E_SStoreTrue: forall aexp1 aexp2 st ,
       in_dom  (aeval (fst st) aexp1 ) (snd st) ->
-      ([aexp1] ::= aexp2) # st ~> 
-      St((fst st), h_update (snd st) (aeval (fst st) aexp1) (aeval (fst st) aexp2))
+      ([aexp1] ::= aexp2) @ st ~> 
+      St((fst st), 
+          h_update (snd st) (aeval (fst st) aexp1) (aeval (fst st) aexp2))
+  | E_SStoreFalse: forall aexp1 aexp2 st,
+      not_in_dom (aeval (fst st) aexp1) (snd st) -> 
+      ([aexp1] ::= aexp2 ) @ st ~> Abt
+  | E_SLoadTrue: forall aexp id st st1 n,
+      in_dom (aeval (fst st) aexp) (snd st) ->
+      (snd st) (aeval (fst st) aexp) = Some n ->
+      ( id ::= [aexp]) @ st ~> st1 
+  | E_SLoadFalse : forall aexp id st ,
+      not_in_dom (aeval (fst st) aexp) (snd st) ->
+      ( id ::= [aexp]) @ st ~> Abt
   where "c '@' st '~>' st' " := (big_step (c, st) st').
 
   (*Inductive scom : Type := 
@@ -138,7 +167,7 @@ Inductive big_step:
   | SIf : bexp -> scom -> scom -> scom
   | SWhile : bexp -> scom -> scom
   | SLoad : id -> aexp -> scom        (* x:=[e] *)
-  | SStore: scom -> scom -> scom      (* [e]:=e' *)
+  | SStore: aexp -> aexp -> scom      (* [e]:=e' *)
   | SCons:  id -> aexp -> aexp -> scom(* x:=cons(e,e') *)
   | SDis : aexp -> scom .              (* dispose(e) *)
 *)
@@ -246,19 +275,15 @@ Inductive multiStep :
 (* c is safe at state s *)
 Definition safeAt (c: scom) (s: sstate) : Prop :=
 (* ~ multiStep (c, St s) Abt *) 
-(*
 forall c' s',
-  multiStep (c, St s) (c', St s')
+  small_step (c, St s) (c', St s')
   -> c' = SKIP \/ exists c'', exists s'', small_step (c', St s') (c'', St s'').
-*)
-admit.
+
 
 Definition safeMono (c: scom) : Prop := 
-(*
   forall s h h', 
     safeAt c (s, h) -> disjoint h h' -> safeAt c (s, h_union h h').
-*)
-admit.
+
 
 Definition frame (c: scom) : Prop :=
   forall s h1 h2 c' s' h',
