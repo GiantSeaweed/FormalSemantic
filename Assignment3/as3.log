@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.3.10)  9 NOV 2018 23:30
+This is XeTeX, Version 3.14159265-2.6-0.99998 (TeX Live 2017) (preloaded format=xelatex 2018.3.10)  14 DEC 2018 14:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1845,10 +1845,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--117
 
 
 LaTeX Font Warning: Font shape `TU/SongtiSC(0)/m/sl' undefined
-(Font)              using `TU/SongtiSC(0)/m/n' instead on input line 151.
+(Font)              using `TU/SongtiSC(0)/m/n' instead on input line 156.
 
 [2]
-Overfull \hbox (9.82689pt too wide) in paragraph at lines 172--176
+Overfull \hbox (9.82689pt too wide) in paragraph at lines 178--182
 []\TU/SongtiSC(0)/m/n/10.53937 Suppose $ [] \OML/txmi/m/it/10.53937 b [] \OT1/cmr/m/n/10.53937 (\OML/txmi/m/it/10.53937 c\OT1/cmr/m/n/10.53937 ; \OML/txmi/m/it/10.53937 w[]\OT1/cmr/m/n/10.53937 )$ \TU/SongtiSC(0)/m/n/10.53937 terminates after $ [] $ testing $\OML/txmi/m/it/10.53937 b$ \TU/SongtiSC(0)/m/n/10.53937 exactly $\OML/txmi/m/it/10.53937 n\OT1/cmr/m/n/10.53937 (\OML/txmi/m/it/10.53937 > \OT1/cmr/m/n/10.53937 0)$ \TU/SongtiSC(0)/m/n/10.53937 times. It indicates that $ [] \OML/txmi/m/it/10.53937 b [] \OT1/cmr/m/n/10.53937 (\OML/txmi/m/it/10.53937 c\OT1/cmr/m/n/10.53937 ; \OML/txmi/m/it/10.53937 w[]\OT1/cmr/m/n/10.53937 )$
  []
 
@@ -1864,7 +1864,7 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Here is how much of TeX's memory you used:
  34277 strings out of 493005
  707610 string characters out of 6134596
- 712541 words of memory out of 5000000
+ 713541 words of memory out of 5000000
  37747 multiletter control sequences out of 15000+600000
  31959 words of font info for 136 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191

@@ -139,8 +139,14 @@ it is obvious that $F (\sqcup_{n=0}^{\infty}f_n) \sigma = (\sqcup_{n=0}^{'\infty
  which means $F (\sqcup_{n=0}^{\infty}f_n) \sigma \sqsubseteq \sqcup_{n=0}^{'\infty}(F f_n) \sigma$.
 
  If $\boolBlock{b}\sigma = \btrue$ and $(\commBlock{c}\sigma) \ne \bot$,
- \[F (\sqcup_{n=0}^{\infty}f_n) \sigma =F g \sigma= g (\commBlock{c}\sigma)\]
- \[\sqcup_{n=0}^{'\infty}(F f_n) \sigma=\sqcup_{n=0}^{'\infty}f_n(\commBlock{c}\sigma)\sqsubseteq g (\commBlock{c}\sigma)\]
+ \[F (\sqcup_{n=0}^{\infty}f_n) \sigma =F g \sigma= g (\commBlock{c}\sigma)\cdots\cdots \mathrm{（1）式} \]
+ \[\mathrm{原来的提交版：}\sqcup_{n=0}^{'\infty}(F f_n) \sigma=\sqcup_{n=0}^{'\infty}f_n(\commBlock{c}\sigma)\sqsubseteq g (\commBlock{c}\sigma)\]
+ \[\mathrm{解释版：}\sqcup_{n=0}^{'\infty}(F f_n) \sigma 
+ \overset{Prop2.2}{=}\sqcup_{n=0}^{\infty}f_n(\commBlock{c}\sigma)
+ \sqsupseteq (\sqcup_{n=0}^{\infty}f_n)(\commBlock{c}\sigma)
+  =  g (\commBlock{c}\sigma)
+ \overset{\mathrm{（1）式}}{=}F (\sqcup_{n=0}^{\infty}f_n)\sigma\]
+ \[\mathrm{【主要改动的是，原来提交版的小于号方向写反了】}\]
 \[\therefore F (\sqcup_{n=0}^{\infty}f_n) \sigma \sqsubseteq \sqcup_{n=0}^{'\infty}(F f_n)\sigma\]
 
 In conclusion, $F$ in the semantic equation for the $while$ command is continous.

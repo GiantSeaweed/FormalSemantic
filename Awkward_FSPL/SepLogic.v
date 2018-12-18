@@ -7,8 +7,31 @@ From FSPL Require Export Imp.
 (* Redefine commands here. To distinguish them 
    from Imp commands, we call them scom *)
 (* You need to change it into an inductive definition *)
-Definition scom : Type := admit.
+Inductive scom : Type := 
+  | SSkip : scom
+  | SAss : id -> aexp -> scom
+  | SSeq : scom -> scom -> scom
+  | SIf : bexp -> scom -> scom -> scom
+  | SWhile : bexp -> scom -> scom
+  | SLoad : id -> aexp -> scom        (* x:=[e] *)
+  | SStore: scom -> scom -> scom      (* [e]:=e' *)
+  | SCons:  id -> aexp -> aexp -> scom(* x:=cons(e,e') *)
+  | SDis : aexp -> scom .              (* dispose(e) *)
 
+Notation "'SKIP'" :=
+  SSkip.
+Notation "x '::=' a" :=
+  (SAss x a) (at level 60).
+Notation "c1 ;; c2" :=
+  (SSeq c1 c2) (at level 80, right associativity).
+Notation "'WHILE' b 'DO' c 'END'" :=
+  (SWhile b c) (at level 80, right associativity).
+Notation "'IFB' c1 'THEN' c2 'ELSE' c3 'FI'" :=
+  (SIf c1 c2 c3) (at level 80, right associativity).
+Notation " x '::=' [ e ] " :=
+  (SLoad x e) (at level 60).
+Notation "[ e ] '::=' e' " :=
+  (SStore e e') (at level 60).
 
 (* Program states, which is called sstate *)
 Definition store := id -> nat.
@@ -74,8 +97,51 @@ Inductive ext_state : Type :=
 
 (* big-step semantics. You should change it into 
    an inductive definition *)
-Definition big_step: 
-   scom * sstate -> ext_state -> Prop := admit.
+Reserved Notation "c '@' st '~>' st'" (at level 40, st at level 39).
+Inductive big_step: 
+   scom * sstate -> ext_state -> Prop := 
+  | E_SSkip : forall st,
+      SKIP @ st ~> St st
+  | E_SAss : forall st id aexp n,
+      aeval (fst st) aexp = n ->
+      (id ::= aexp) @ st ~> (St ((update (fst st) id n), (snd st)))
+  | E_SSeq : forall st st1 st2 c1 c2,
+      c1 @ st ~> (St st1) ->
+      c2 @ st1 ~> (St st2) ->
+      (c1 ;; c2) @ st~> (St st2)
+  | E_SIfTrue : forall st st1 b c1 c2,
+      beval (fst st) b = true ->
+      c1 @ st ~> (St st1) ->
+      (IFB b THEN c1 ELSE c2 FI) @ st ~> (St st1)
+  | E_SIfFalse : forall st st1 b c1 c2,
+      beval (fst st) b = false ->
+      c2 @ st ~> (St st1) ->
+      (IFB b THEN c1 ELSE c2 FI) @ st ~> (St st1)
+  | E_SWhileEnd: forall st b c,
+      beval (fst st) b = false ->
+      (WHILE b DO c END) @ st ~> (St st)
+  | E_SWhileLoop: forall st st1 st2 b c,
+      beval (fst st) b = true ->
+      c @ st ~> (St st1) ->
+      (WHILE b DO c END) @ st1 ~> (St st2) ->
+      (WHILE b DO c END) @ st ~>  (St st2) 
+  |E_STORE_T: forall aexp1 aexp2 st ,
+      in_dom  (aeval (fst st) aexp1 ) (snd st) ->
+      ([aexp1] ::= aexp2) # st ~> 
+      St((fst st), h_update (snd st) (aeval (fst st) aexp1) (aeval (fst st) aexp2))
+  where "c '@' st '~>' st' " := (big_step (c, st) st').
+
+  (*Inductive scom : Type := 
+  | SSkip : scom
+  | SAss : id -> aexp -> scom
+  | SSeq : scom -> scom -> scom
+  | SIf : bexp -> scom -> scom -> scom
+  | SWhile : bexp -> scom -> scom
+  | SLoad : id -> aexp -> scom        (* x:=[e] *)
+  | SStore: scom -> scom -> scom      (* [e]:=e' *)
+  | SCons:  id -> aexp -> aexp -> scom(* x:=cons(e,e') *)
+  | SDis : aexp -> scom .              (* dispose(e) *)
+*)
 
 (* small-step semantics. Should be inductive too *)
 Definition small_step: 
