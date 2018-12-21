@@ -254,7 +254,39 @@ Notation "p '<==>' q" := (spEquiv p q) (at level 90).
 (* Prove the following lemmas *)
 Lemma disj_star_distr: forall (p q r: sass),
   (p \\// q) ** r <==> (p ** r) \\// (q ** r).
-Admitted.  
+Proof.
+  intros p q r. split.
+  - unfold strongerThan. intros s.
+    unfold star. unfold s_disj.  unfold s_imp.
+    destruct s. 
+    intros H. destruct H as [h0 [h1 h2]].
+    destruct h2 as [hm [hn [hp hq]]].
+
+    destruct hp as [hp1 | hp2];
+    [left|right];
+    exists h0; exists h1;
+    repeat split;
+    try apply hm;
+    try apply hn;
+    try apply hp1;
+    try apply hp2;
+    try apply hq.
+  - unfold strongerThan. intros s.
+    unfold star. unfold s_disj.  unfold s_imp.
+    destruct s. 
+    intros [H0|H1];
+
+    try destruct H0 as [h' [h''[hm [hn[hp hq]]]]]; 
+    try destruct H1 as [h' [h''[hm [hn[hp hq]]]]]; 
+    exists h'; exists h''; 
+    repeat split;
+    try apply hm;
+    try apply hn;
+    try apply hp;
+    try apply hq.
+    + left. apply hp.
+    + right. apply hp.
+Qed.
 
 Lemma conj_star_distr: forall (p q r: sass),
   (p //\\ q) ** r ==> (p ** r) //\\ (q ** r).
